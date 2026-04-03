@@ -24,7 +24,6 @@
   --pink:    #ff6b9d;
   --mint:    #00d4aa;
 
-  --y1: #L1 · IPPS/AUX;
   --col-l1:    #ff5c3a;
   --col-l2i:   #3a8eff;
   --col-l2a:   #9b6dff;
@@ -47,12 +46,41 @@ body {
   font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
+  /* FIX: cursor:none on body only, not inherited */
+  cursor: none !important;
+}
+
+/* FIX: force cursor:none everywhere so the dot is always visible */
+*, *::before, *::after {
+  cursor: none !important;
 }
 
 /* ══ CUSTOM CURSOR ══ */
-.cur  { position:fixed; width:10px; height:10px; background:var(--coral); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .1s, background .3s; }
-.cur-ring { position:fixed; width:36px; height:36px; border:2px solid var(--coral); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s, height .3s, border-color .3s; opacity:.5; }
-body { cursor:none; }
+/* FIX: z-index raised above everything including viewer overlay (900) */
+.cur {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--coral);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%,-50%);
+  transition: transform .1s, background .3s;
+  /* FIX: will-change keeps it on its own compositing layer */
+  will-change: left, top;
+}
+.cur-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 2px solid var(--coral);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%,-50%);
+  transition: width .3s, height .3s, border-color .3s;
+  opacity: .5;
+  will-change: left, top;
+}
 
 /* ══ NAV ══ */
 nav {
@@ -68,7 +96,7 @@ nav {
   font-weight: 900; font-size: 22px;
   color: var(--ink); text-decoration:none;
   display:flex; align-items:center; gap:10px;
-  background:none; border:none; cursor:pointer;
+  background:none; border:none;
 }
 .nav-logo-pill {
   background: var(--coral); color:#fff;
@@ -79,13 +107,13 @@ nav {
 .nav-links button {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size:13px; font-weight:600;
-  color:var(--ink2); background:none; border:none; cursor:pointer;
+  color:var(--ink2); background:none; border:none;
   padding: 6px 14px; border-radius:20px;
   transition: background .2s, color .2s;
 }
 .nav-links button:hover { background:var(--ink); color:var(--cream); }
 .nav-links button.active { background:var(--ink); color:var(--cream); }
-.hbg { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+.hbg { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; }
 .hbg span { display:block; width:24px; height:2px; background:var(--ink); border-radius:2px; }
 #mm {
   display:none; position:fixed; top:64px; left:0; right:0;
@@ -94,7 +122,7 @@ nav {
 }
 #mm button {
   font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600;
-  color:var(--ink); background:none; border:none; cursor:pointer;
+  color:var(--ink); background:none; border:none;
   padding:12px 0; border-bottom:1px solid var(--paper); text-align:left; width:100%;
 }
 #mm button:last-child { border-bottom:none; }
@@ -151,7 +179,7 @@ nav {
 .btn {
   display:inline-flex; align-items:center; gap:8px;
   padding:13px 26px; border-radius:100px; font-weight:700;
-  font-size:14px; cursor:pointer; border:2px solid var(--ink);
+  font-size:14px; border:2px solid var(--ink);
   font-family:'Plus Jakarta Sans',sans-serif;
   transition: all .2s; text-decoration:none;
 }
@@ -223,7 +251,7 @@ nav {
 .track-card {
   border: 2px solid var(--ink);
   border-radius: var(--r2); padding:32px 28px;
-  cursor:pointer; transition: transform .2s, box-shadow .2s;
+  transition: transform .2s, box-shadow .2s;
   position:relative; overflow:hidden;
   background:var(--cream);
 }
@@ -308,7 +336,7 @@ nav {
   display:flex; align-items:center; gap:10px;
   width:100%; padding:12px 16px; border-radius:12px;
   font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600;
-  background:none; border:2px solid transparent; cursor:pointer;
+  background:none; border:2px solid transparent;
   color:var(--ink); transition:all .18s; text-align:left; margin-bottom:6px;
 }
 .year-btn .yb-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
@@ -323,6 +351,8 @@ nav {
   font-size:13px; background:var(--cream); color:var(--ink);
   outline:none; margin-bottom:20px;
   transition:border-color .18s;
+  /* FIX: restore cursor for input field */
+  cursor: text !important;
 }
 .sidebar-search:focus { border-color:var(--coral); }
 
@@ -346,7 +376,7 @@ nav {
 .module-header {
   display:grid; grid-template-columns:1fr auto;
   align-items:center; gap:16px;
-  padding:16px 20px; cursor:pointer;
+  padding:16px 20px;
   transition:background .15s;
 }
 .module-header:hover { background:var(--paper); }
@@ -358,7 +388,7 @@ nav {
   display:inline-flex; align-items:center; gap:5px;
   padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700;
   border:1.5px solid var(--ink); background:transparent; color:var(--ink);
-  cursor:pointer; transition:all .15s; font-family:'Plus Jakarta Sans',sans-serif;
+  transition:all .15s; font-family:'Plus Jakarta Sans',sans-serif;
   white-space:nowrap;
 }
 .res-btn:hover { transform:translateY(-1px); }
@@ -366,7 +396,7 @@ nav {
 .res-btn.rb-td     { background:var(--teal);    color:#fff; border-color:var(--teal);    }
 .res-btn.rb-exam   { background:var(--coral);   color:#fff; border-color:var(--coral);   }
 .res-btn.rb-extra  { background:var(--lavender);color:#fff; border-color:var(--lavender);}
-.res-btn.rb-null   { background:var(--paper); color:var(--ink3); border-color:var(--paper); cursor:default; opacity:.4; }
+.res-btn.rb-null   { background:var(--paper); color:var(--ink3); border-color:var(--paper); opacity:.4; }
 
 /* ══ EMBEDDED VIEWER ══ */
 .viewer-overlay {
@@ -398,7 +428,7 @@ nav {
 }
 .viewer-close {
   width:36px; height:36px; border-radius:50%; border:2px solid var(--ink);
-  background:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  background:none; display:flex; align-items:center; justify-content:center;
   font-size:18px; transition:all .15s; flex-shrink:0;
 }
 .viewer-close:hover { background:var(--ink); color:var(--cream); }
@@ -473,7 +503,7 @@ nav {
 .faq-list { border:2px solid var(--ink); border-radius:var(--r2); overflow:hidden; }
 .faq-item { border-bottom:2px solid var(--ink); }
 .faq-item:last-child { border-bottom:none; }
-.faq-q { width:100%; text-align:left; padding:20px 28px; background:var(--cream); border:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:var(--ink); transition:background .15s; }
+.faq-q { width:100%; text-align:left; padding:20px 28px; background:var(--cream); border:none; display:flex; align-items:center; justify-content:space-between; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:var(--ink); transition:background .15s; }
 .faq-q:hover { background:var(--paper); }
 .faq-q.open { background:var(--ink); color:#fff; }
 .faq-q .fa { font-size:20px; transition:transform .2s; flex-shrink:0; }
@@ -487,10 +517,10 @@ footer {
   padding:48px; border-top:2px solid var(--ink);
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;
 }
-.footer-logo { font-family:'Fraunces',serif; font-weight:900; font-size:28px; cursor:pointer; background:none; border:none; color:var(--cream); }
+.footer-logo { font-family:'Fraunces',serif; font-weight:900; font-size:28px; background:none; border:none; color:var(--cream); }
 .footer-copy { font-size:13px; color:rgba(255,255,255,.4); text-align:center; line-height:1.8; }
 .footer-links { display:flex; gap:16px; flex-wrap:wrap; }
-.footer-links button { font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,.5); background:none; border:none; cursor:pointer; transition:color .15s; }
+.footer-links button { font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,.5); background:none; border:none; transition:color .15s; }
 .footer-links button:hover { color:#fff; }
 
 /* ══ REVEAL ══ */
@@ -502,7 +532,6 @@ footer {
 .sec-sm { padding:40px 48px; }
 .sec-title { font-family:'Fraunces',serif; font-weight:900; font-size:clamp(28px,3.5vw,44px); letter-spacing:-.02em; margin-bottom:32px; }
 
-/* color splashes for section bg */
 .bg-paper { background:var(--paper); }
 .bg-ink { background:var(--ink); color:var(--cream); }
 .bg-coral { background:var(--coral); color:#fff; }
@@ -944,106 +973,168 @@ footer {
 <script>
 /* ══════════════════════════════════════
    CURSOR
+   FIX: raised z-index, removed cursor:none from JS (handled in CSS)
 ══════════════════════════════════════ */
-const cur=document.getElementById('cur'), ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('button,a,.track-card,.module-card,.stage-card,.val-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='var(--coral)';cur.style.background='var(--coral)';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='var(--coral)';cur.style.background='var(--coral)';});
+const cur  = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px';
+  cur.style.top  = my + 'px';
+});
+
+(function loop(){
+  rx += (mx - rx) * .13;
+  ry += (my - ry) * .13;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(loop);
+})();
+
+/* FIX: hover effect on interactive elements */
+document.querySelectorAll('button, a, .track-card, .module-card, .stage-card, .val-card, .mc-card, .stat-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width  = '52px';
+    ring.style.height = '52px';
+    ring.style.borderColor = 'var(--coral)';
+    cur.style.background   = 'var(--coral)';
+    cur.style.transform    = 'translate(-50%,-50%) scale(1.4)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width  = '36px';
+    ring.style.height = '36px';
+    ring.style.borderColor = 'var(--coral)';
+    cur.style.background   = 'var(--coral)';
+    cur.style.transform    = 'translate(-50%,-50%) scale(1)';
+  });
 });
 
 /* ══════════════════════════════════════
    ROUTING
+   FIX: removed go('home') at bottom — page starts with .active on #page-home in HTML
 ══════════════════════════════════════ */
-function go(page, tab){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
-  const nb=document.getElementById('n-'+page); if(nb) nb.classList.add('active');
-  window.scrollTo({top:0,behavior:'instant'});
-  initReveal();
-  if(page==='license' && tab){
-    setTimeout(()=>{
-      const btn=document.querySelector(`.year-btn[data-tab="${tab}"]`);
-      if(btn) btn.click();
-    },60);
+function go(page, tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('n-' + page);
+  if (nb) nb.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  /* FIX: re-observe newly visible .rv elements */
+  setTimeout(initReveal, 50);
+  if (page === 'license' && tab) {
+    setTimeout(() => {
+      const btn = document.querySelector(`.year-btn[data-tab="${tab}"]`);
+      if (btn) btn.click();
+    }, 80);
   }
 }
-function tmm(){const m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
-function cmm(){document.getElementById('mm').style.display='none';}
+
+function tmm() {
+  const m = document.getElementById('mm');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+function cmm() { document.getElementById('mm').style.display = 'none'; }
 
 /* ══════════════════════════════════════
    YEAR SWITCHER
+   FIX: reset search on tab change
 ══════════════════════════════════════ */
-function switchYear(btn){
-  document.querySelectorAll('.year-btn').forEach(b=>b.classList.remove('active'));
+function switchYear(btn) {
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const tab=btn.dataset.tab;
-  document.querySelectorAll('.year-panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+tab).classList.add('active');
-  const s=document.getElementById('msrch'); if(s){s.value=''; showAll();}
+  const tab = btn.dataset.tab;
+  document.querySelectorAll('.year-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  /* FIX: reset search field and show all cards */
+  const s = document.getElementById('msrch');
+  if (s) { s.value = ''; showAll(); }
 }
 
 /* ══════════════════════════════════════
    VIEWER
+   FIX: corrected TYPE_COLORS syntax error (var(--ink) must be a string)
 ══════════════════════════════════════ */
 const TYPE_COLORS = {
-  'Cours':  {bg:'var(--sky)',    c:'#fff'},
-  'TD':     {bg:'var(--teal)',   c:'#fff'},
-  'Exam':   {bg:'var(--coral)',  c:'#fff'},
-  'Extra':  {bg:'var(--lavender)',c:'#fff'},
-  'Stage':  {bg:'var(--pink)',   c:'#fff'},
-  'Master': {bg:'var(--gold)',   c:var(--ink)},
+  'Cours':  { bg: 'var(--sky)',      c: '#fff' },
+  'TD':     { bg: 'var(--teal)',     c: '#fff' },
+  'Exam':   { bg: 'var(--coral)',    c: '#fff' },
+  'Extra':  { bg: 'var(--lavender)', c: '#fff' },
+  'Stage':  { bg: 'var(--pink)',     c: '#fff' },
+  'Master': { bg: 'var(--gold)',     c: 'var(--ink)' },
 };
-function openViewer(url, name, type){
-  const overlay=document.getElementById('viewer');
-  const iframe=document.getElementById('v-iframe');
-  const fallback=document.getElementById('v-fallback');
-  const fallbackLink=document.getElementById('v-fallback-link');
-  const titleEl=document.getElementById('v-title');
-  const typeEl=document.getElementById('v-type');
 
-  titleEl.textContent=name;
-  typeEl.textContent=type;
-  const col=TYPE_COLORS[type]||{bg:'var(--ink)',c:'#fff'};
-  typeEl.style.background=col.bg; typeEl.style.color=col.c; typeEl.style.borderColor=col.bg;
+function openViewer(url, name, type) {
+  const overlay      = document.getElementById('viewer');
+  const iframe       = document.getElementById('v-iframe');
+  const fallback     = document.getElementById('v-fallback');
+  const fallbackLink = document.getElementById('v-fallback-link');
+  const titleEl      = document.getElementById('v-title');
+  const typeEl       = document.getElementById('v-type');
 
-  iframe.style.display='block';
-  fallback.style.display='none';
-  iframe.src=url;
-  fallbackLink.href=url;
+  titleEl.textContent = name;
+  typeEl.textContent  = type;
+  const col = TYPE_COLORS[type] || { bg: 'var(--ink)', c: '#fff' };
+  typeEl.style.background  = col.bg;
+  typeEl.style.color       = col.c;
+  typeEl.style.borderColor = col.bg;
 
-  // If iframe fails to load (X-Frame-Options), show fallback
-  iframe.onload=()=>{ try{ const d=iframe.contentDocument||iframe.contentWindow.document; if(!d) showFallback(url); } catch(e){ showFallback(url); }};
-  // Show fallback after timeout as safety net
-  setTimeout(()=>{ try{ const d=iframe.contentDocument||iframe.contentWindow.document; if(!d||d.URL==='about:blank'){ /* still loading */ } } catch(e){ showFallback(url); }},3000);
+  iframe.style.display   = 'block';
+  fallback.style.display = 'none';
+  iframe.src = url;
+  fallbackLink.href = url;
+
+  /* FIX: cross-origin iframe detection — catch block = blocked */
+  let fallbackTimer = setTimeout(() => {
+    try {
+      const d = iframe.contentDocument || iframe.contentWindow.document;
+      if (!d || d.URL === 'about:blank') showFallback(url);
+    } catch(e) {
+      showFallback(url);
+    }
+  }, 3500);
+
+  iframe.onload = () => {
+    clearTimeout(fallbackTimer);
+    try {
+      const d = iframe.contentDocument || iframe.contentWindow.document;
+      if (!d) showFallback(url);
+    } catch(e) {
+      showFallback(url);
+    }
+  };
 
   overlay.classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
-function showFallback(url){
-  document.getElementById('v-iframe').style.display='none';
-  document.getElementById('v-fallback').style.display='flex';
-  document.getElementById('v-fallback-link').href=url;
+
+function showFallback(url) {
+  document.getElementById('v-iframe').style.display   = 'none';
+  document.getElementById('v-fallback').style.display = 'flex';
+  document.getElementById('v-fallback-link').href     = url;
 }
-function closeViewer(){
+
+function closeViewer() {
   document.getElementById('viewer').classList.remove('open');
-  document.getElementById('v-iframe').src='';
-  document.body.style.overflow='';
+  document.getElementById('v-iframe').src = '';
+  document.body.style.overflow = '';
 }
-function closeViewerOutside(e){
-  if(e.target===document.getElementById('viewer')) closeViewer();
+
+function closeViewerOutside(e) {
+  if (e.target === document.getElementById('viewer')) closeViewer();
 }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeViewer(); });
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeViewer(); });
 
 /* ══════════════════════════════════════
    COURSE DATA
 ══════════════════════════════════════ */
-const B='https://sites.google.com/view/p2radix';
+const B = 'https://sites.google.com/view/p2radix';
+
 const D = {
-  l1:[
+  l1: [
     {n:'Chimie Générale (I)',c:`${B}/license/l1-ippsaux/courses/general-chemistry/courses`,t:`${B}/license/l1-ippsaux/courses/general-chemistry/td`,e:`${B}/license/l1-ippsaux/courses/general-chemistry/exames`,x:`${B}/license/l1-ippsaux/courses/general-chemistry/extra`},
     {n:'Chimie Organique',c:`${B}/license/l1-ippsaux/courses/chimie-organique/courses-or`,t:`${B}/license/l1-ippsaux/courses/chimie-organique/td-or`,e:`${B}/license/l1-ippsaux/courses/chimie-organique/exames`,x:`${B}/license/l1-ippsaux/courses/chimie-organique/extra`},
     {n:'Physique',c:`${B}/license/l1-ippsaux/courses/physique/courses-phy`,t:`${B}/license/l1-ippsaux/courses/physique/td-phy`,e:`${B}/license/l1-ippsaux/courses/physique/exames`,x:`${B}/license/l1-ippsaux/courses/physique/extra`},
@@ -1061,7 +1152,7 @@ const D = {
     {n:'Méthodes Physiques',c:`${B}/license/l1-ippsaux/courses/methodes-physiques/courses-mp`,t:`${B}/license/l1-ippsaux/courses/methodes-physiques/td-mp`,e:`${B}/license/l1-ippsaux/courses/methodes-physiques/exames`,x:`${B}/license/l1-ippsaux/courses/methodes-physiques/extra`},
     {n:'Histoire des Sciences Méd. & Pharm.',c:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/courses-hs`,t:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/td-hs`,e:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/exames`,x:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/extra`},
   ],
-  l2ipps:[
+  l2ipps: [
     {n:'Substances Bioactives à Intérêt Thérapeutique',c:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/courses-sb`,t:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/td-sb`,e:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/exames`,x:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/extra`},
     {n:'Pharmacologie (1)',c:`${B}/license/l2-ipps/courses/phamacologie-1/courses-phg`,t:`${B}/license/l2-ipps/courses/phamacologie-1/td-phg`,e:`${B}/license/l2-ipps/courses/phamacologie-1/exames`,x:`${B}/license/l2-ipps/courses/phamacologie-1/extra`},
     {n:'Sciences Biologiques (1)',c:`${B}/license/l2-ipps/courses/sciences-biologiques-1/courses-sb1`,t:`${B}/license/l2-ipps/courses/sciences-biologiques-1/td-sb1`,e:`${B}/license/l2-ipps/courses/sciences-biologiques-1/exames`,x:`${B}/license/l2-ipps/courses/sciences-biologiques-1/extra`},
@@ -1079,7 +1170,7 @@ const D = {
     {n:'Formes Pharmaceutiques',c:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/courses-fp`,t:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/td-fp`,e:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/exames`,x:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/extra`},
     {n:'Normes & Guidelines',c:`${B}/license/l2-ipps/courses/normes-et-guidelines/courses-ng`,t:`${B}/license/l2-ipps/courses/normes-et-guidelines/td-ng`,e:`${B}/license/l2-ipps/courses/normes-et-guidelines/exames`,x:`${B}/license/l2-ipps/courses/normes-et-guidelines/extra`},
   ],
-  l2aux:[
+  l2aux: [
     {n:'Substances Bioactives à Intérêt Thérapeutique',c:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-courses`,t:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-cc`,e:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-exams`,x:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-extra`},
     {n:'Sciences Biologiques (1)',c:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/courses`,t:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/td`,e:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/exames`,x:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/extra`},
     {n:'Méthodes Séparatives',c:`${B}/license/l2-aux/courses-l/methodes-separatives/courses`,t:`${B}/license/l2-aux/courses-l/methodes-separatives/td`,e:`${B}/license/l2-aux/courses-l/methodes-separatives/exames`,x:`${B}/license/l2-aux/courses-l/methodes-separatives/extra`},
@@ -1096,7 +1187,7 @@ const D = {
     {n:'Anglais Technique Niveau 2',c:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/courses`,t:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/td`,e:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/exames`,x:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/extra`},
     {n:'Logiciels de Gestion',c:`${B}/license/l2-aux/courses-l/logiciels-de-gestion`,t:null,e:null,x:null},
   ],
-  l3ipps:[
+  l3ipps: [
     {n:'Biotechnologie',c:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/extra`},
     {n:'Production Pharmaceutique',c:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/extra`},
     {n:'Contrôle de Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/extra`},
@@ -1113,7 +1204,7 @@ const D = {
     {n:'Stage — Production Pharmaceutique',c:`${B}/license/l3-ipps/courses-l3-ipps/stage-production-pharmaceutique`,t:null,e:null,x:null},
     {n:'Stage — Gestion de la Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/stage-gestion-de-la-qualite`,t:null,e:null,x:null},
   ],
-  l3aux:[
+  l3aux: [
     {n:'Gestion Pharmaceutique & Comptabilité',c:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/courses`,t:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/td`,e:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/exames`,x:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/extra`},
     {n:'Produits de Santé',c:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/courses`,t:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/td`,e:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/exames`,x:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/extra`},
     {n:'Bonnes Pratiques Officinales & Hospitalières',c:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/courses`,t:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/td`,e:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/exames`,x:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/extra`},
@@ -1124,20 +1215,24 @@ const D = {
   ],
 };
 
-/* Build module cards */
-function rbtn(url, label, cls){
-  if(!url) return `<button class="res-btn rb-null" disabled>${label}</button>`;
-  return `<button class="res-btn ${cls}" onclick="openViewer('${url}','${label}','${label}')">${label}</button>`;
+/* ══ Build module rows ══ */
+function rbtn(url, label, cls) {
+  if (!url) return `<button class="res-btn rb-null" disabled>${label}</button>`;
+  /* FIX: escape single quotes in url/label to avoid breaking onclick attribute */
+  const safeUrl   = url.replace(/'/g, "\\'");
+  const safeLabel = label.replace(/'/g, "\\'");
+  return `<button class="res-btn ${cls}" onclick="openViewer('${safeUrl}','${safeLabel}','${label}')">${label}</button>`;
 }
-function buildModules(key){
-  const container=document.getElementById('rows-'+key);
-  const cnt=document.getElementById('cnt-'+key);
-  if(cnt) cnt.textContent=`${D[key].length} modules disponibles`;
-  D[key].forEach(r=>{
-    const card=document.createElement('div');
-    card.className='module-card';
-    card.dataset.name=r.n.toLowerCase();
-    card.innerHTML=`
+
+function buildModules(key) {
+  const container = document.getElementById('rows-' + key);
+  const cnt       = document.getElementById('cnt-' + key);
+  if (cnt) cnt.textContent = `${D[key].length} modules disponibles`;
+  D[key].forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.dataset.name = r.n.toLowerCase();
+    card.innerHTML = `
       <div class="module-header">
         <div class="module-name">${r.n}</div>
         <div class="module-resources">
@@ -1152,29 +1247,46 @@ function buildModules(key){
 }
 ['l1','l2ipps','l2aux','l3ipps','l3aux'].forEach(buildModules);
 
-/* Search */
-document.getElementById('msrch').addEventListener('input',function(){
-  const q=this.value.toLowerCase();
-  document.querySelectorAll('.year-panel.active .module-card').forEach(c=>{
-    c.style.display=c.dataset.name.includes(q)?'':'none';
+/* ══ Search ══
+   FIX: only filter cards in the currently active panel */
+document.getElementById('msrch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.year-panel.active .module-card').forEach(c => {
+    c.style.display = c.dataset.name.includes(q) ? '' : 'none';
   });
 });
-function showAll(){ document.querySelectorAll('.module-card').forEach(c=>c.style.display=''); }
+
+function showAll() {
+  document.querySelectorAll('.module-card').forEach(c => c.style.display = '');
+}
 
 /* ══ FAQ ══ */
-function faq(btn){
-  const a=btn.nextElementSibling, open=btn.classList.contains('open');
-  document.querySelectorAll('.faq-q.open').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open');});
-  if(!open){btn.classList.add('open');a.classList.add('open');}
+function faq(btn) {
+  const a    = btn.nextElementSibling;
+  const open = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('open');
+  });
+  if (!open) { btn.classList.add('open'); a.classList.add('open'); }
 }
 
 /* ══ SCROLL REVEAL ══ */
-const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:.07});
-function initReveal(){ document.querySelectorAll('.page.active .rv:not(.vis)').forEach(el=>obs.observe(el)); }
-initReveal();
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+  });
+}, { threshold: .07 });
 
-/* Init */
-go('home');
+function initReveal() {
+  document.querySelectorAll('.page.active .rv:not(.vis)').forEach(el => obs.observe(el));
+}
+
+/* ══ INIT ══
+   FIX: do NOT call go('home') here — the HTML already has #page-home.active
+   Just trigger reveal for the initial page */
+document.getElementById('n-home').classList.add('active');
+initReveal();
 </script>
 </body>
 </html>

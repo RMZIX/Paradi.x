@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>P2RADIX — Accueil</title>
+  <meta name="description" content="Plateforme académique de la Faculté de Pharmacie — ressources pour IPPS et AUX, L1 à Master."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(110,230,160,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(110,230,160,.028) 1px,transparent 1px); background-size:48px 48px; }
+    .hero-glow1 { position:absolute; top:-200px; left:-200px; width:700px; height:700px; background:radial-gradient(circle,rgba(110,230,160,.065) 0%,transparent 70%); pointer-events:none; }
+    .hero-glow2 { position:absolute; bottom:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(232,195,106,.04) 0%,transparent 70%); pointer-events:none; }
+
+    .hero-eyebrow { font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--green); margin-bottom:22px; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp .8s .15s forwards; }
+    .hero-eyebrow::before { content:''; display:block; width:38px; height:1px; background:var(--green); }
+
+    .hero-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(60px,11vw,130px); line-height:.88; letter-spacing:-.04em; color:var(--white); opacity:0; animation:fadeUp .8s .3s forwards; }
+    .hero-title .accent { color:var(--green); }
+
+    .hero-sub { font-family:'Lora',serif; font-style:italic; font-size:clamp(14px,1.8vw,19px); color:var(--text-dim); max-width:440px; margin-top:20px; margin-bottom:44px; opacity:0; animation:fadeUp .8s .45s forwards; }
+
+    .hero-cta { display:flex; gap:12px; flex-wrap:wrap; opacity:0; animation:fadeUp .8s .6s forwards; }
+
+    .hero-stats { display:flex; gap:44px; flex-wrap:wrap; margin-top:64px; padding-top:36px; border-top:1px solid var(--border); opacity:0; animation:fadeUp .8s .75s forwards; }
+
+    .hero-scroll { position:absolute; bottom:32px; left:40px; display:flex; align-items:center; gap:10px; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--text-dim); opacity:0; animation:fadeUp .8s 1s forwards; }
+    .scroll-line { width:36px; height:1px; background:var(--muted); animation:scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100%{width:36px} 50%{width:72px} }
+
+    /* ── Track cards ── */
+    .tracks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:4px; overflow:hidden; }
+    .track-card { background:var(--surface); padding:28px; transition:background .2s; position:relative; overflow:hidden; text-decoration:none; display:block; }
+    .track-card::before { content:''; position:absolute; top:0; left:0; width:2px; height:100%; background:var(--green); transform:scaleY(0); transform-origin:top; transition:transform .28s; }
+    .track-card:hover { background:var(--surface2); }
+    .track-card:hover::before { transform:scaleY(1); }
+    .track-card-icon { font-size:24px; margin-bottom:14px; }
+    .track-card-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--white); margin-bottom:6px; }
+    .track-card-desc { font-size:11px; color:var(--text-dim); line-height:1.7; margin-bottom:18px; }
+    .track-card-badges { display:flex; gap:6px; flex-wrap:wrap; }
+
+    /* ── About strip ── */
+    .about-strip { display:grid; grid-template-columns:1fr 2fr; gap:0; background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .about-left { padding:60px 40px; border-right:1px solid var(--border); }
+    .about-big { font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,56px); font-weight:800; color:var(--white); line-height:1.05; }
+    .about-big .accent { color:var(--green); }
+    .about-right { padding:60px 40px; }
+    .about-body { font-size:12px; color:var(--text-dim); line-height:2; }
+    .about-body strong { color:var(--green); font-weight:400; }
+
+    /* ── Master banner ── */
+    .master-banner { border:1px solid rgba(232,195,106,.2); border-radius:4px; padding:56px; background:var(--surface); position:relative; overflow:hidden; }
+    .master-banner::before { content:''; position:absolute; top:-40px; right:-80px; width:500px; height:500px; background:radial-gradient(circle,rgba(232,195,106,.06) 0%,transparent 60%); pointer-events:none; }
+    .master-tag { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--amber); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .master-tag::before { content:''; display:inline-block; width:6px; height:6px; background:var(--amber); border-radius:50%; }
+    .master-title { font-family:'Syne',sans-serif; font-size:clamp(28px,5vw,52px); font-weight:800; color:var(--white); line-height:1.05; margin-bottom:14px; }
+    .master-sub { font-size:12px; color:var(--text-dim); margin-bottom:36px; }
+
+    @media(max-width:768px){
+      .hero { padding:80px 20px 60px; }
+      .about-strip { grid-template-columns:1fr; }
+      .about-left { border-right:none; border-bottom:1px solid var(--border); padding:44px 20px; }
+      .about-right { padding:44px 20px; }
+      .master-banner { padding:36px 20px; }
+      .hero-scroll { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-logo-dot"></div>P2RADIX</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Accueil</a></li>
+    <li><a href="pages/license.html">Licence</a></li>
+    <li><a href="pages/internship.html">Stage</a></li>
+    <li><a href="pages/master.html">Master</a></li>
+    <li><a href="pages/about.html">À propos</a></li>
+  </ul>
+  <span class="nav-badge">Faculté de Pharmacie · DZ</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-eyebrow">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »</div>
+
+  <h1 class="hero-title">P2<span class="accent">RADIX</span></h1>
+
+  <p class="hero-sub">La plateforme académique de la Faculté de Pharmacie. Tous vos cours, TDs et examens — organisés, accessibles, immédiats.</p>
+
+  <div class="hero-cta">
+    <a href="pages/license.html" class="btn btn-primary">↗ Explorer les Cours</a>
+    <a href="pages/about.html"   class="btn btn-ghost">À propos du projet</a>
+  </div>
+
+  <div class="hero-stats">
+    <div><div class="stat-num">3</div><div class="stat-label">Années · Licence</div></div>
+    <div><div class="stat-num">2</div><div class="stat-label">Filières · IPPS / AUX</div></div>
+    <div><div class="stat-num">40+</div><div class="stat-label">Modules disponibles</div></div>
+    <div><div class="stat-num">4</div><div class="stat-label">Types de ressources</div></div>
+  </div>
+
+  <div class="hero-scroll"><span class="scroll-line"></span>Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><span class="ticker-inner">Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques · Management Qualité · Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques · Management Qualité ·&nbsp;</span></div>
+
+<!-- PARCOURS SECTION -->
+<section class="section">
+  <div class="section-label">— Parcours disponibles</div>
+  <div class="tracks-grid reveal">
+    <a href="pages/license.html?year=l1" class="track-card">
+      <div class="track-card-icon">🧪</div>
+      <div class="track-card-title">L1 · IPPS / AUX</div>
+      <p class="track-card-desc">Chimie générale & organique, biologie végétale et animale, physique, biostatistiques, terminologie médico-pharmaceutique.</p>
+      <div class="track-card-badges"><span class="badge badge-green">16 modules</span><span class="badge">Commun</span></div>
+    </a>
+    <a href="pages/license.html?year=l2ipps" class="track-card">
+      <div class="track-card-icon">⚗️</div>
+      <div class="track-card-title">L2 · IPPS</div>
+      <p class="track-card-desc">Substances bioactives, pharmacologie, méthodes séparatives & spectrales, opérations pharmaceutiques, bonnes pratiques.</p>
+      <div class="track-card-badges"><span class="badge badge-green">16 modules</span><span class="badge">IPPS</span></div>
+    </a>
+    <a href="pages/license.html?year=l2aux" class="track-card">
+      <div class="track-card-icon">🏥</div>
+      <div class="track-card-title">L2 · AUX</div>
+      <p class="track-card-desc">Stérilisation, formes pharmaceutiques, analyses biologiques, phytothérapie, normes & guidelines, logiciels de gestion.</p>
+      <div class="track-card-badges"><span class="badge badge-green">15 modules</span><span class="badge">AUX</span></div>
+    </a>
+    <a href="pages/license.html?year=l3ipps" class="track-card">
+      <div class="track-card-icon">🔬</div>
+      <div class="track-card-title">L3 · IPPS</div>
+      <p class="track-card-desc">Biotechnologie, production pharmaceutique, contrôle qualité, métrologie, management, HSE, législation & stages terrain.</p>
+      <div class="track-card-badges"><span class="badge badge-green">15 modules</span><span class="badge">IPPS</span><span class="badge">Stages</span></div>
+    </a>
+    <a href="pages/license.html?year=l3aux" class="track-card">
+      <div class="track-card-icon">💊</div>
+      <div class="track-card-title">L3 · AUX</div>
+      <p class="track-card-desc">Gestion pharmaceutique, produits de santé, bonnes pratiques officinales, assurance qualité lab, stage pharmacie & labo.</p>
+      <div class="track-card-badges"><span class="badge badge-green">7 modules</span><span class="badge">AUX</span><span class="badge">Stages</span></div>
+    </a>
+    <a href="pages/internship.html" class="track-card">
+      <div class="track-card-icon">🏭</div>
+      <div class="track-card-title">Stage & Internship</div>
+      <p class="track-card-desc">Ressources et guides pour les stages industriels, rapports, et formation terrain dans les entreprises pharmaceutiques.</p>
+      <div class="track-card-badges"><span class="badge badge-amber">Stage</span><span class="badge">L2 · L3</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-left reveal">
+    <div class="about-big">Savoir.<br>Méthode.<br><span class="accent">Avenir.</span></div>
+  </div>
+  <div class="about-right reveal">
+    <p class="about-body">
+      P2RADIX est une plateforme académique dédiée aux étudiants de la <strong>Faculté de Pharmacie</strong> de l'Université des Sciences de la Santé « Dr. Youssef Al-Khatib ». Elle centralise les ressources pédagogiques pour les filières <strong>IPPS</strong> (Industrie et Production Pharmaceutique et de Santé) et <strong>AUX</strong> (Auxiliaire de Pharmacie), du niveau L1 au Master.<br><br>
+      Chaque module propose quatre types de ressources : <strong>Cours</strong>, <strong>TD</strong>, <strong>Examens</strong> et <strong>Extra</strong>. Notre mission est de rendre l'accès au savoir pharmaceutique plus rapide, plus clair et plus efficace pour tous les étudiants.
+    </p>
+  </div>
+</div>
+
+<!-- MASTER SECTION -->
+<section class="section">
+  <div class="section-label">— Au-delà de la Licence</div>
+  <div class="master-banner reveal">
+    <div class="master-tag">Prochain niveau</div>
+    <h2 class="master-title">Master en<br>Sciences Pharmaceutiques</h2>
+    <p class="master-sub">Ressources Master — consultez la section dédiée sur la plateforme.</p>
+    <a href="pages/master.html" class="btn btn-amber">↗ Explorer le Master</a>
+  </div>
+</section>
+
+<hr class="divider"/>
+<footer>
+  <a href="index.html" class="footer-logo">P2RADIX</a>
+  <div class="footer-copy">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »<br>Faculté de Pharmacie · Algérie</div>
+  <nav class="footer-links">
+    <a href="pages/license.html">Licence</a>
+    <a href="pages/internship.html">Stage</a>
+    <a href="pages/master.html">Master</a>
+    <a href="pages/about.html">À propos</a>
+  </nav>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

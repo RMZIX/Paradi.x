@@ -1,203 +1,606 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>P2RADIX — Accueil</title>
-  <meta name="description" content="Plateforme académique de la Faculté de Pharmacie — ressources pour IPPS et AUX, L1 à Master."/>
-  <link rel="stylesheet" href="css/style.css"/>
+  <title>P2RADIX — Faculté de Pharmacie</title>
+  <meta name="description" content="Plateforme académique de la Faculté de Pharmacie — cours, TDs, examens pour IPPS et AUX, L1 à Master."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&family=Lora:ital@1&display=swap" rel="stylesheet">
   <style>
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 100px 40px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(110,230,160,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(110,230,160,.028) 1px,transparent 1px); background-size:48px 48px; }
-    .hero-glow1 { position:absolute; top:-200px; left:-200px; width:700px; height:700px; background:radial-gradient(circle,rgba(110,230,160,.065) 0%,transparent 70%); pointer-events:none; }
-    .hero-glow2 { position:absolute; bottom:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(232,195,106,.04) 0%,transparent 70%); pointer-events:none; }
-
-    .hero-eyebrow { font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--green); margin-bottom:22px; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp .8s .15s forwards; }
-    .hero-eyebrow::before { content:''; display:block; width:38px; height:1px; background:var(--green); }
-
-    .hero-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(60px,11vw,130px); line-height:.88; letter-spacing:-.04em; color:var(--white); opacity:0; animation:fadeUp .8s .3s forwards; }
-    .hero-title .accent { color:var(--green); }
-
-    .hero-sub { font-family:'Lora',serif; font-style:italic; font-size:clamp(14px,1.8vw,19px); color:var(--text-dim); max-width:440px; margin-top:20px; margin-bottom:44px; opacity:0; animation:fadeUp .8s .45s forwards; }
-
-    .hero-cta { display:flex; gap:12px; flex-wrap:wrap; opacity:0; animation:fadeUp .8s .6s forwards; }
-
-    .hero-stats { display:flex; gap:44px; flex-wrap:wrap; margin-top:64px; padding-top:36px; border-top:1px solid var(--border); opacity:0; animation:fadeUp .8s .75s forwards; }
-
-    .hero-scroll { position:absolute; bottom:32px; left:40px; display:flex; align-items:center; gap:10px; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--text-dim); opacity:0; animation:fadeUp .8s 1s forwards; }
-    .scroll-line { width:36px; height:1px; background:var(--muted); animation:scrollPulse 2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100%{width:36px} 50%{width:72px} }
-
-    /* ── Track cards ── */
-    .tracks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:4px; overflow:hidden; }
-    .track-card { background:var(--surface); padding:28px; transition:background .2s; position:relative; overflow:hidden; text-decoration:none; display:block; }
-    .track-card::before { content:''; position:absolute; top:0; left:0; width:2px; height:100%; background:var(--green); transform:scaleY(0); transform-origin:top; transition:transform .28s; }
-    .track-card:hover { background:var(--surface2); }
-    .track-card:hover::before { transform:scaleY(1); }
-    .track-card-icon { font-size:24px; margin-bottom:14px; }
-    .track-card-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--white); margin-bottom:6px; }
-    .track-card-desc { font-size:11px; color:var(--text-dim); line-height:1.7; margin-bottom:18px; }
-    .track-card-badges { display:flex; gap:6px; flex-wrap:wrap; }
-
-    /* ── About strip ── */
-    .about-strip { display:grid; grid-template-columns:1fr 2fr; gap:0; background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-    .about-left { padding:60px 40px; border-right:1px solid var(--border); }
-    .about-big { font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,56px); font-weight:800; color:var(--white); line-height:1.05; }
-    .about-big .accent { color:var(--green); }
-    .about-right { padding:60px 40px; }
-    .about-body { font-size:12px; color:var(--text-dim); line-height:2; }
-    .about-body strong { color:var(--green); font-weight:400; }
-
-    /* ── Master banner ── */
-    .master-banner { border:1px solid rgba(232,195,106,.2); border-radius:4px; padding:56px; background:var(--surface); position:relative; overflow:hidden; }
-    .master-banner::before { content:''; position:absolute; top:-40px; right:-80px; width:500px; height:500px; background:radial-gradient(circle,rgba(232,195,106,.06) 0%,transparent 60%); pointer-events:none; }
-    .master-tag { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--amber); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
-    .master-tag::before { content:''; display:inline-block; width:6px; height:6px; background:var(--amber); border-radius:50%; }
-    .master-title { font-family:'Syne',sans-serif; font-size:clamp(28px,5vw,52px); font-weight:800; color:var(--white); line-height:1.05; margin-bottom:14px; }
-    .master-sub { font-size:12px; color:var(--text-dim); margin-bottom:36px; }
-
-    @media(max-width:768px){
-      .hero { padding:80px 20px 60px; }
-      .about-strip { grid-template-columns:1fr; }
-      .about-left { border-right:none; border-bottom:1px solid var(--border); padding:44px 20px; }
-      .about-right { padding:44px 20px; }
-      .master-banner { padding:36px 20px; }
-      .hero-scroll { display:none; }
-    }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07090d;--s1:#0d1117;--s2:#131920;--b:rgba(110,230,160,.12);--g:#6ee6a0;--gd:rgba(110,230,160,.15);--gg:rgba(110,230,160,.06);--a:#e8c36a;--ad:rgba(232,195,106,.12);--t:#c8d8c0;--td:#6b7a6e;--w:#eef4ee;--mu:#4a5568}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'DM Mono',monospace;font-size:13px;line-height:1.7;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:.4}
+#cur{position:fixed;width:7px;height:7px;background:var(--g);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:screen}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(110,230,160,.35);border-radius:50%;pointer-events:none;z-index:9998;transition:width .25s,height .25s}
+nav{position:fixed;top:0;left:0;right:0;z-index:800;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(7,9,13,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--g);letter-spacing:.08em;text-decoration:none;display:flex;align-items:center;gap:9px;cursor:pointer;background:none;border:none}
+.logo-dot{width:6px;height:6px;background:var(--g);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.5)}}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links button{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--td);background:none;border:none;cursor:pointer;padding-bottom:2px;position:relative;transition:color .18s;font-family:'DM Mono',monospace}
+.nav-links button::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--g);transition:width .22s}
+.nav-links button:hover,.nav-links button.active{color:var(--g)}
+.nav-links button:hover::after,.nav-links button.active::after{width:100%}
+.nav-badge{font-size:9px;letter-spacing:.07em;color:var(--td);border:1px solid var(--b);padding:3px 10px;border-radius:2px}
+.hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hbg span{display:block;width:22px;height:1px;background:var(--td)}
+#mm{display:none;position:fixed;top:58px;left:0;right:0;background:rgba(7,9,13,.97);border-bottom:1px solid var(--b);z-index:700;padding:20px 24px;flex-direction:column;gap:4px}
+#mm button{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--td);background:none;border:none;cursor:pointer;padding:12px 0;border-bottom:1px solid var(--b);text-align:left;width:100%;transition:color .15s}
+#mm button:last-child{border-bottom:none}
+#mm button:hover{color:var(--g)}
+.page{display:none;min-height:100vh;padding-top:58px}
+.page.active{display:block}
+.ph{padding:70px 40px 50px;border-bottom:1px solid var(--b);position:relative;overflow:hidden}
+.ph-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(110,230,160,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(110,230,160,.025) 1px,transparent 1px);background-size:48px 48px}
+.ph-glow{position:absolute;top:-160px;left:-160px;width:500px;height:500px;background:radial-gradient(circle,rgba(110,230,160,.07) 0%,transparent 70%);pointer-events:none}
+.ey{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.ey::before{content:'';display:block;width:30px;height:1px;background:var(--g)}
+.ph-t{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(38px,7vw,84px);line-height:.93;letter-spacing:-.03em;color:var(--w)}
+.ph-t .acc{color:var(--g)}.ph-t .amb{color:var(--a)}
+.ph-s{margin-top:16px;font-family:'Lora',serif;font-style:italic;font-size:15px;color:var(--td);max-width:480px}
+.ticker{background:var(--gd);border-top:1px solid var(--b);border-bottom:1px solid var(--b);padding:11px 0;overflow:hidden;white-space:nowrap}
+.ti{display:inline-block;animation:tick 32s linear infinite;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--g)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ta{background:var(--ad);border-color:rgba(232,195,106,.15)}.ta .ti{color:var(--a)}
+.sec{padding:60px 40px}.sec-sm{padding:36px 40px}
+.sl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:30px;display:flex;align-items:center;gap:12px}
+.sl::after{content:'';flex:1;height:1px;background:var(--b)}
+.sl.am{color:var(--a)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:2px;border:none;cursor:pointer;transition:all .2s}
+.bg{background:var(--g);color:var(--bg)}.bg:hover{background:#8df0b8;box-shadow:0 0 20px rgba(110,230,160,.3)}
+.bgh{background:transparent;color:var(--td);border:1px solid var(--b)}.bgh:hover{border-color:var(--g);color:var(--g)}
+.ba{background:var(--a);color:var(--bg)}.ba:hover{background:#f0d48a;box-shadow:0 0 20px rgba(232,195,106,.3)}
+.br{display:flex;gap:12px;flex-wrap:wrap}
+.card{background:var(--s1);border:1px solid var(--b);border-radius:4px;padding:28px;position:relative;overflow:hidden;transition:background .2s}
+.card::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--g);transform:scaleY(0);transform-origin:top;transition:transform .28s}
+.card:hover{background:var(--s2)}.card:hover::before{transform:scaleY(1)}
+.ci{font-size:22px;margin-bottom:14px;display:block}
+.ct2{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--w);margin-bottom:6px}
+.cb{font-size:11px;color:var(--td);line-height:1.7}
+.bdg{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--b);border-radius:2px;color:var(--td)}
+.bg2{border-color:rgba(110,230,160,.3);color:var(--g);background:var(--gg)}
+.ba2{border-color:rgba(232,195,106,.3);color:var(--a);background:var(--ad)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.g2 .card,.g3 .card{border:none;border-radius:0}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.tg .card{border:none;border-radius:0;cursor:pointer}
+.tabs{display:flex;gap:0;border:1px solid var(--b);border-radius:4px;overflow:hidden;width:fit-content;margin-bottom:28px;flex-wrap:wrap}
+.tab{padding:9px 20px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--td);background:transparent;border:none;border-right:1px solid var(--b);cursor:pointer;transition:all .18s}
+.tab:last-child{border-right:none}
+.tab.active{background:var(--gd);color:var(--g)}
+.tab:hover:not(.active){background:rgba(255,255,255,.025);color:var(--t)}
+.tp{display:none}.tp.active{display:block}
+.ct{border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.ch{display:grid;grid-template-columns:1fr 88px 88px 88px 88px;padding:10px 20px;border-bottom:1px solid var(--b);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--td);background:var(--s2)}
+.ch div:not(:first-child){text-align:center}
+.cr{display:grid;grid-template-columns:1fr 88px 88px 88px 88px;padding:13px 20px;border-bottom:1px solid var(--b);align-items:center;transition:background .13s}
+.cr:last-child{border-bottom:none}.cr:hover{background:var(--gg)}
+.cn{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--w)}
+.cd{width:5px;height:5px;background:var(--g);border-radius:50%;flex-shrink:0}
+.rb{display:inline-block;font-size:9px;letter-spacing:.06em;color:var(--td);text-decoration:none;padding:4px 8px;border:1px solid transparent;border-radius:2px;transition:all .13s;text-align:center;width:100%}
+.rb:hover{border-color:var(--g);color:var(--g);background:var(--gg)}
+.srch{width:100%;max-width:420px;background:var(--s1);border:1px solid var(--b);border-radius:4px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--w);outline:none;transition:border-color .2s;margin-bottom:24px}
+.srch::placeholder{color:var(--td)}.srch:focus{border-color:var(--g)}
+.ir{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.cnt{font-size:10px;letter-spacing:.1em;color:var(--td)}
+.stats{display:flex;gap:44px;flex-wrap:wrap}
+.sn{font-family:'Syne',sans-serif;font-size:34px;font-weight:800;color:var(--w);line-height:1}
+.sl2{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--td);margin-top:4px}
+hr{height:1px;background:var(--b);border:none}
+footer{padding:34px 40px;border-top:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.fl{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--g);letter-spacing:.08em;cursor:pointer;background:none;border:none}
+.fc{font-size:10px;color:var(--td);letter-spacing:.04em;text-align:center;line-height:1.8}
+.fln{display:flex;gap:20px}
+.fln button{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--td);background:none;border:none;cursor:pointer;transition:color .18s;font-family:'DM Mono',monospace}
+.fln button:hover{color:var(--g)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+/* HOME */
+.hero{min-height:calc(100vh - 58px);display:flex;flex-direction:column;justify-content:center;padding:60px 40px;position:relative;overflow:hidden}
+.hg{position:absolute;inset:0;background-image:linear-gradient(rgba(110,230,160,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(110,230,160,.028) 1px,transparent 1px);background-size:48px 48px}
+.hg1{position:absolute;top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(110,230,160,.065) 0%,transparent 70%);pointer-events:none}
+.hg2{position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,195,106,.04) 0%,transparent 70%);pointer-events:none}
+.hey{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--g);margin-bottom:20px;display:flex;align-items:center;gap:12px;animation:fu .8s .15s both}
+.hey::before{content:'';display:block;width:38px;height:1px;background:var(--g)}
+.ht{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(64px,12vw,136px);line-height:.87;letter-spacing:-.04em;color:var(--w);animation:fu .8s .3s both}
+.ht .acc{color:var(--g)}
+.hs{font-family:'Lora',serif;font-style:italic;font-size:clamp(14px,1.8vw,19px);color:var(--td);max-width:440px;margin:18px 0 36px;animation:fu .8s .45s both}
+.hc{display:flex;gap:12px;flex-wrap:wrap;animation:fu .8s .6s both}
+.hst{display:flex;gap:44px;flex-wrap:wrap;margin-top:56px;padding-top:32px;border-top:1px solid var(--b);animation:fu .8s .75s both}
+.sh{position:absolute;bottom:28px;left:40px;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--td);animation:fu .8s 1s both}
+.shl{width:36px;height:1px;background:var(--mu);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{width:36px}50%{width:72px}}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.as{display:grid;grid-template-columns:1fr 2fr;background:var(--s1);border-top:1px solid var(--b);border-bottom:1px solid var(--b)}
+.asl{padding:56px 40px;border-right:1px solid var(--b)}
+.asb{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:800;color:var(--w);line-height:1.05}
+.asb .g{color:var(--g)}
+.asr{padding:56px 40px;font-size:12px;color:var(--td);line-height:2}
+.asr strong{color:var(--g);font-weight:400}
+.mb2{border:1px solid rgba(232,195,106,.2);border-radius:4px;padding:52px;background:var(--s1);position:relative;overflow:hidden}
+.mb2::before{content:'';position:absolute;top:-40px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,195,106,.06) 0%,transparent 60%);pointer-events:none}
+/* ABOUT */
+.mf{display:grid;grid-template-columns:1fr 1.6fr;gap:0;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.mfl{background:var(--s1);padding:52px 40px;border-right:1px solid var(--b)}
+.mfb{font-family:'Syne',sans-serif;font-size:clamp(38px,5.5vw,62px);font-weight:800;color:var(--w);line-height:1}
+.mfb .g{color:var(--g)}
+.mfr{background:var(--s2);padding:52px 40px}
+.mfd{font-size:12px;color:var(--td);line-height:2.1}
+.mfd p+p{margin-top:14px}
+.mfd strong{color:var(--t);font-weight:400}
+.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.vc{background:var(--s1);padding:32px 26px;transition:background .2s}.vc:hover{background:var(--s2)}
+.vn{font-family:'Syne',sans-serif;font-size:46px;font-weight:800;color:var(--g);opacity:.18;line-height:1;margin-bottom:8px}
+.vt{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--w);margin-bottom:6px}
+.vd{font-size:11px;color:var(--td);line-height:1.7}
+.fl2{border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.fi{border-bottom:1px solid var(--b)}.fi:last-child{border-bottom:none}
+.fq{width:100%;text-align:left;padding:16px 24px;font-family:'DM Mono',monospace;font-size:12px;color:var(--t);background:var(--s1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .18s}
+.fq:hover{background:var(--s2);color:var(--g)}.fq.open{color:var(--g)}
+.fa2{font-size:10px;transition:transform .2s;flex-shrink:0}.fq.open .fa2{transform:rotate(90deg)}
+.fan{display:none;padding:0 24px 16px;font-size:11px;color:var(--td);line-height:1.8;background:var(--s1)}.fan.open{display:block}
+/* INTERNSHIP */
+.ih{display:grid;grid-template-columns:1.2fr 1fr;gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.ii{background:var(--s1);padding:48px}
+.iv{background:var(--s2);padding:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.iv::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(110,230,160,.09) 0%,transparent 70%)}
+.it{font-family:'Syne',sans-serif;font-size:clamp(26px,3.5vw,42px);font-weight:800;color:var(--w);line-height:1.08;margin-bottom:14px}
+.ib2{font-size:12px;color:var(--td);line-height:1.9;margin-bottom:28px}
+.sgc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.sc{background:var(--s1);padding:26px;transition:background .2s;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--a);transform:scaleY(0);transform-origin:top;transition:transform .28s}
+.sc:hover{background:var(--s2)}.sc:hover::before{transform:scaleY(1)}
+.sn2{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--a);opacity:.22;line-height:1;margin-bottom:8px}
+.st{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--w);margin-bottom:6px}
+.sd{font-size:11px;color:var(--td);line-height:1.6;margin-bottom:14px}
+.tl{position:relative;padding-left:28px}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--b)}
+.tli{position:relative;padding:18px 0;border-bottom:1px solid var(--b)}.tli:last-child{border-bottom:none}
+.tld{position:absolute;left:-32px;top:22px;width:7px;height:7px;background:var(--g);border-radius:50%;box-shadow:0 0 8px rgba(110,230,160,.4)}
+.tll{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.tlt{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--w);margin-bottom:3px}
+.tld2{font-size:11px;color:var(--td);line-height:1.6}
+/* MASTER */
+.mh{background:var(--s1);border:1px solid rgba(232,195,106,.18);border-radius:4px;padding:56px;position:relative;overflow:hidden}
+.mh::before{content:'';position:absolute;top:-80px;right:-80px;width:600px;height:600px;background:radial-gradient(circle,rgba(232,195,106,.07) 0%,transparent 60%);pointer-events:none}
+.mt2{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mt2::before{content:'';width:6px;height:6px;background:var(--a);border-radius:50%;display:inline-block;animation:blink 2s infinite}
+.mtt{font-family:'Syne',sans-serif;font-size:clamp(34px,5.5vw,62px);font-weight:800;color:var(--w);line-height:1.02;margin-bottom:14px}
+.mts{font-size:12px;color:var(--td);line-height:1.9;margin-bottom:30px;max-width:480px}
+.csg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--b);border:1px solid var(--b);border-radius:4px;overflow:hidden}
+.cs{background:var(--s1);padding:26px;opacity:.55;transition:opacity .2s,background .2s}.cs:hover{opacity:.85;background:var(--s2)}
+.cst{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.csi{font-size:22px}
+.csb{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--a);border:1px solid rgba(232,195,106,.3);padding:2px 8px;border-radius:2px}
+.cstit{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--w);margin-bottom:6px}
+.csd{font-size:11px;color:var(--td);line-height:1.6}
+.ib{background:var(--s1);border:1px solid var(--b);border-radius:4px;padding:30px}
+.ibt{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--w);margin-bottom:12px}
+.ibl{list-style:none}
+.ibl li{padding:8px 0;border-bottom:1px solid var(--b);font-size:12px;color:var(--td);display:flex;align-items:center;gap:10px}
+.ibl li:last-child{border-bottom:none}
+.ibl li::before{content:'→';color:var(--g);font-size:10px;flex-shrink:0}
+@media(max-width:768px){
+  nav{padding:0 18px}.nav-links{display:none}.hbg{display:flex}
+  .hero{padding:40px 20px}.sh{display:none}
+  .sec{padding:44px 20px}.ph{padding:50px 20px 40px}
+  footer{flex-direction:column;text-align:center}
+  .g2,.g3,.vg,.mf,.as{grid-template-columns:1fr}
+  .mfl{border-right:none;border-bottom:1px solid var(--b)}
+  .asl{border-right:none;border-bottom:1px solid var(--b)}
+  .ch{display:none}.cr{grid-template-columns:1fr;gap:6px}
+  .tabs{width:100%}.tab{flex:1;text-align:center;padding:9px 10px;font-size:10px}
+  .ih{grid-template-columns:1fr}.mh{padding:36px 20px}
+  .nav-badge{display:none}
+}
   </style>
 </head>
 <body>
-
+<div id="cur"></div><div id="ring"></div>
 <nav>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-dot"></div>P2RADIX</a>
+  <button class="logo" onclick="go('home')"><div class="logo-dot"></div>P2RADIX</button>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">Accueil</a></li>
-    <li><a href="pages/license.html">Licence</a></li>
-    <li><a href="pages/internship.html">Stage</a></li>
-    <li><a href="pages/master.html">Master</a></li>
-    <li><a href="pages/about.html">À propos</a></li>
+    <li><button onclick="go('home')" id="n-home">Accueil</button></li>
+    <li><button onclick="go('license')" id="n-license">Licence</button></li>
+    <li><button onclick="go('internship')" id="n-internship">Stage</button></li>
+    <li><button onclick="go('master')" id="n-master">Master</button></li>
+    <li><button onclick="go('about')" id="n-about">À propos</button></li>
   </ul>
   <span class="nav-badge">Faculté de Pharmacie · DZ</span>
+  <button class="hbg" onclick="tmm()"><span></span><span></span><span></span></button>
 </nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow1"></div>
-  <div class="hero-glow2"></div>
-
-  <div class="hero-eyebrow">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »</div>
-
-  <h1 class="hero-title">P2<span class="accent">RADIX</span></h1>
-
-  <p class="hero-sub">La plateforme académique de la Faculté de Pharmacie. Tous vos cours, TDs et examens — organisés, accessibles, immédiats.</p>
-
-  <div class="hero-cta">
-    <a href="pages/license.html" class="btn btn-primary">↗ Explorer les Cours</a>
-    <a href="pages/about.html"   class="btn btn-ghost">À propos du projet</a>
-  </div>
-
-  <div class="hero-stats">
-    <div><div class="stat-num">3</div><div class="stat-label">Années · Licence</div></div>
-    <div><div class="stat-num">2</div><div class="stat-label">Filières · IPPS / AUX</div></div>
-    <div><div class="stat-num">40+</div><div class="stat-label">Modules disponibles</div></div>
-    <div><div class="stat-num">4</div><div class="stat-label">Types de ressources</div></div>
-  </div>
-
-  <div class="hero-scroll"><span class="scroll-line"></span>Scroll</div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker"><span class="ticker-inner">Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques · Management Qualité · Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques · Management Qualité ·&nbsp;</span></div>
-
-<!-- PARCOURS SECTION -->
-<section class="section">
-  <div class="section-label">— Parcours disponibles</div>
-  <div class="tracks-grid reveal">
-    <a href="pages/license.html?year=l1" class="track-card">
-      <div class="track-card-icon">🧪</div>
-      <div class="track-card-title">L1 · IPPS / AUX</div>
-      <p class="track-card-desc">Chimie générale & organique, biologie végétale et animale, physique, biostatistiques, terminologie médico-pharmaceutique.</p>
-      <div class="track-card-badges"><span class="badge badge-green">16 modules</span><span class="badge">Commun</span></div>
-    </a>
-    <a href="pages/license.html?year=l2ipps" class="track-card">
-      <div class="track-card-icon">⚗️</div>
-      <div class="track-card-title">L2 · IPPS</div>
-      <p class="track-card-desc">Substances bioactives, pharmacologie, méthodes séparatives & spectrales, opérations pharmaceutiques, bonnes pratiques.</p>
-      <div class="track-card-badges"><span class="badge badge-green">16 modules</span><span class="badge">IPPS</span></div>
-    </a>
-    <a href="pages/license.html?year=l2aux" class="track-card">
-      <div class="track-card-icon">🏥</div>
-      <div class="track-card-title">L2 · AUX</div>
-      <p class="track-card-desc">Stérilisation, formes pharmaceutiques, analyses biologiques, phytothérapie, normes & guidelines, logiciels de gestion.</p>
-      <div class="track-card-badges"><span class="badge badge-green">15 modules</span><span class="badge">AUX</span></div>
-    </a>
-    <a href="pages/license.html?year=l3ipps" class="track-card">
-      <div class="track-card-icon">🔬</div>
-      <div class="track-card-title">L3 · IPPS</div>
-      <p class="track-card-desc">Biotechnologie, production pharmaceutique, contrôle qualité, métrologie, management, HSE, législation & stages terrain.</p>
-      <div class="track-card-badges"><span class="badge badge-green">15 modules</span><span class="badge">IPPS</span><span class="badge">Stages</span></div>
-    </a>
-    <a href="pages/license.html?year=l3aux" class="track-card">
-      <div class="track-card-icon">💊</div>
-      <div class="track-card-title">L3 · AUX</div>
-      <p class="track-card-desc">Gestion pharmaceutique, produits de santé, bonnes pratiques officinales, assurance qualité lab, stage pharmacie & labo.</p>
-      <div class="track-card-badges"><span class="badge badge-green">7 modules</span><span class="badge">AUX</span><span class="badge">Stages</span></div>
-    </a>
-    <a href="pages/internship.html" class="track-card">
-      <div class="track-card-icon">🏭</div>
-      <div class="track-card-title">Stage & Internship</div>
-      <p class="track-card-desc">Ressources et guides pour les stages industriels, rapports, et formation terrain dans les entreprises pharmaceutiques.</p>
-      <div class="track-card-badges"><span class="badge badge-amber">Stage</span><span class="badge">L2 · L3</span></div>
-    </a>
-  </div>
-</section>
-
-<!-- ABOUT STRIP -->
-<div class="about-strip">
-  <div class="about-left reveal">
-    <div class="about-big">Savoir.<br>Méthode.<br><span class="accent">Avenir.</span></div>
-  </div>
-  <div class="about-right reveal">
-    <p class="about-body">
-      P2RADIX est une plateforme académique dédiée aux étudiants de la <strong>Faculté de Pharmacie</strong> de l'Université des Sciences de la Santé « Dr. Youssef Al-Khatib ». Elle centralise les ressources pédagogiques pour les filières <strong>IPPS</strong> (Industrie et Production Pharmaceutique et de Santé) et <strong>AUX</strong> (Auxiliaire de Pharmacie), du niveau L1 au Master.<br><br>
-      Chaque module propose quatre types de ressources : <strong>Cours</strong>, <strong>TD</strong>, <strong>Examens</strong> et <strong>Extra</strong>. Notre mission est de rendre l'accès au savoir pharmaceutique plus rapide, plus clair et plus efficace pour tous les étudiants.
-    </p>
-  </div>
+<div id="mm">
+  <button onclick="go('home');cmm()">Accueil</button>
+  <button onclick="go('license');cmm()">Licence</button>
+  <button onclick="go('internship');cmm()">Stage</button>
+  <button onclick="go('master');cmm()">Master</button>
+  <button onclick="go('about');cmm()">À propos</button>
 </div>
 
-<!-- MASTER SECTION -->
-<section class="section">
-  <div class="section-label">— Au-delà de la Licence</div>
-  <div class="master-banner reveal">
-    <div class="master-tag">Prochain niveau</div>
-    <h2 class="master-title">Master en<br>Sciences Pharmaceutiques</h2>
-    <p class="master-sub">Ressources Master — consultez la section dédiée sur la plateforme.</p>
-    <a href="pages/master.html" class="btn btn-amber">↗ Explorer le Master</a>
+<!-- HOME -->
+
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hg"></div><div class="hg1"></div><div class="hg2"></div>
+    <div class="hey">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »</div>
+    <h1 class="ht">P2<span class="acc">RADIX</span></h1>
+    <p class="hs">La plateforme académique de la Faculté de Pharmacie. Tous vos cours, TDs et examens — organisés, accessibles, immédiats.</p>
+    <div class="hc">
+      <button class="btn bg" onclick="go('license')">↗ Explorer les Cours</button>
+      <button class="btn bgh" onclick="go('about')">À propos du projet</button>
+    </div>
+    <div class="hst">
+      <div><div class="sn">3</div><div class="sl2">Années · Licence</div></div>
+      <div><div class="sn">2</div><div class="sl2">Filières · IPPS / AUX</div></div>
+      <div><div class="sn">40+</div><div class="sl2">Modules disponibles</div></div>
+      <div><div class="sn">4</div><div class="sl2">Types de ressources</div></div>
+    </div>
+    <div class="sh"><span class="shl"></span>Scroll</div>
+  </section>
+  <div class="ticker"><span class="ti">Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques · Pharmacologie · Biotechnologie · Contrôle Qualité · Bonnes Pratiques · Sciences Biologiques · Formes Pharmaceutiques · Méthodes Séparatives · Production Pharmaceutique · HSE · Métrologie · Chimie Organique · Phytothérapie · Analyses Biologiques ·&nbsp;</span></div>
+  <section class="sec">
+    <div class="sl">— Parcours disponibles</div>
+    <div class="tg rv">
+      <div class="card" onclick="go('license','l1')"><span class="ci">🧪</span><div class="ct2">L1 · IPPS / AUX</div><p class="cb">Chimie générale & organique, biologie végétale et animale, physique, biostatistiques, terminologie médico-pharmaceutique.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg bg2">16 modules</span><span class="bdg">Commun</span></div></div>
+      <div class="card" onclick="go('license','l2ipps')"><span class="ci">⚗️</span><div class="ct2">L2 · IPPS</div><p class="cb">Substances bioactives, pharmacologie, méthodes séparatives & spectrales, opérations pharmaceutiques, bonnes pratiques.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg bg2">16 modules</span><span class="bdg">IPPS</span></div></div>
+      <div class="card" onclick="go('license','l2aux')"><span class="ci">🏥</span><div class="ct2">L2 · AUX</div><p class="cb">Stérilisation, formes pharmaceutiques, analyses biologiques, phytothérapie, normes & guidelines, logiciels de gestion.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg bg2">15 modules</span><span class="bdg">AUX</span></div></div>
+      <div class="card" onclick="go('license','l3ipps')"><span class="ci">🔬</span><div class="ct2">L3 · IPPS</div><p class="cb">Biotechnologie, production pharmaceutique, contrôle qualité, métrologie, management, HSE, législation & stages terrain.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg bg2">15 modules</span><span class="bdg">IPPS</span></div></div>
+      <div class="card" onclick="go('license','l3aux')"><span class="ci">💊</span><div class="ct2">L3 · AUX</div><p class="cb">Gestion pharmaceutique, produits de santé, bonnes pratiques officinales, assurance qualité lab, stage pharmacie & labo.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg bg2">7 modules</span><span class="bdg">AUX</span></div></div>
+      <div class="card" onclick="go('internship')"><span class="ci">🏭</span><div class="ct2">Stage & Internship</div><p class="cb">Ressources et guides pour les stages industriels, rapports, et formation terrain dans les entreprises pharmaceutiques.</p><div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap"><span class="bdg ba2">Stage</span><span class="bdg">L2 · L3</span></div></div>
+    </div>
+  </section>
+  <div class="as">
+    <div class="asl rv"><div class="asb">Savoir.<br>Méthode.<br><span class="g">Avenir.</span></div></div>
+    <div class="asr rv">P2RADIX est une plateforme académique dédiée aux étudiants de la <strong>Faculté de Pharmacie</strong> de l'Université des Sciences de la Santé « Dr. Youssef Al-Khatib ». Elle centralise les ressources pour les filières <strong>IPPS</strong> et <strong>AUX</strong>, du niveau L1 au Master. Chaque module propose quatre types de ressources : <strong>Cours</strong>, <strong>TD</strong>, <strong>Examens</strong> et <strong>Extra</strong>.</div>
   </div>
-</section>
+  <section class="sec">
+    <div class="sl">— Au-delà de la Licence</div>
+    <div class="mb2 rv">
+      <div class="mt2" style="margin-bottom:14px">Prochain niveau</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:800;color:var(--w);line-height:1.05;margin-bottom:14px">Master en<br>Sciences Pharmaceutiques</h2>
+      <p style="font-size:12px;color:var(--td);margin-bottom:28px">Ressources Master disponibles — formation avancée post-Licence en sciences pharmaceutiques et recherche.</p>
+      <button class="btn ba" onclick="go('master')">↗ Explorer le Master</button>
+    </div>
+  </section>
+  <hr/><footer><button class="fl" onclick="go('home')">P2RADIX</button><div class="fc">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »<br>Faculté de Pharmacie · Algérie</div><div class="fln"><button onclick="go('license')">Licence</button><button onclick="go('internship')">Stage</button><button onclick="go('master')">Master</button><button onclick="go('about')">À propos</button></div></footer>
+</div>
 
-<hr class="divider"/>
-<footer>
-  <a href="index.html" class="footer-logo">P2RADIX</a>
-  <div class="footer-copy">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »<br>Faculté de Pharmacie · Algérie</div>
-  <nav class="footer-links">
-    <a href="pages/license.html">Licence</a>
-    <a href="pages/internship.html">Stage</a>
-    <a href="pages/master.html">Master</a>
-    <a href="pages/about.html">À propos</a>
-  </nav>
-</footer>
+<!-- LICENSE -->
 
-<script src="js/main.js"></script>
+<div class="page" id="page-license">
+  <header class="ph"><div class="ph-bg"></div><div class="ph-glow"></div><div class="ey">Parcours Académique</div><h1 class="ph-t">Licence<br><span class="acc">IPPS · AUX</span></h1><p class="ph-s">Cours magistraux, travaux dirigés, examens et contenus complémentaires — tous les modules L1 à L3.</p></header>
+  <div class="ticker"><span class="ti">L1 · L2 IPPS · L2 AUX · L3 IPPS · L3 AUX · Cours · TD · Examens · Extra · L1 · L2 IPPS · L2 AUX · L3 IPPS · L3 AUX · Cours · TD · Examens · Extra ·&nbsp;</span></div>
+  <section class="sec">
+    <div class="sl">— Modules par année & filière</div>
+    <div class="tabs" id="ltabs">
+      <button class="tab active" data-tab="l1">L1 · IPPS/AUX</button>
+      <button class="tab" data-tab="l2ipps">L2 · IPPS</button>
+      <button class="tab" data-tab="l2aux">L2 · AUX</button>
+      <button class="tab" data-tab="l3ipps">L3 · IPPS</button>
+      <button class="tab" data-tab="l3aux">L3 · AUX</button>
+    </div>
+    <input type="search" class="srch" id="msrch" placeholder="🔍  Rechercher un module..." autocomplete="off"/>
+    <div class="ir"><span class="cnt" id="mcnt"></span><span style="font-size:9px;letter-spacing:.08em;color:var(--td);text-transform:uppercase">↗ Cours · ↗ TD · ↗ Exam · ↗ Extra</span></div>
+    <div class="tp active" data-panel="l1"><div class="ct rv"><div class="ch"><div>Module</div><div>Cours</div><div>TD</div><div>Examens</div><div>Extra</div></div><div id="r-l1"></div></div></div>
+    <div class="tp" data-panel="l2ipps"><div class="ct rv"><div class="ch"><div>Module</div><div>Cours</div><div>TD</div><div>Examens</div><div>Extra</div></div><div id="r-l2ipps"></div></div></div>
+    <div class="tp" data-panel="l2aux"><div class="ct rv"><div class="ch"><div>Module</div><div>Cours</div><div>TD</div><div>Examens</div><div>Extra</div></div><div id="r-l2aux"></div></div></div>
+    <div class="tp" data-panel="l3ipps"><div class="ct rv"><div class="ch"><div>Module</div><div>Cours</div><div>TD</div><div>Examens</div><div>Extra</div></div><div id="r-l3ipps"></div></div></div>
+    <div class="tp" data-panel="l3aux"><div class="ct rv"><div class="ch"><div>Module</div><div>Cours</div><div>TD</div><div>Examens</div><div>Extra</div></div><div id="r-l3aux"></div></div></div>
+  </section>
+  <section class="sec" style="padding-top:0"><div class="sl">— Ressources annexes</div><div class="g3 rv"><div class="card"><span class="ci">📋</span><div class="ct2">Programmes Officiels</div><p class="cb">Syllabus et volumes horaires officiels pour chaque année et filière.</p></div><div class="card"><span class="ci">📰</span><div class="ct2">News & Actualités</div><p class="cb">Rattrapages, changements de programme et annonces importantes par promotion.</p></div><div class="card"><span class="ci">🗂</span><div class="ct2">Ressources Extra</div><p class="cb">Contenus complémentaires, exercices bonus, et références bibliographiques par module.</p></div></div></section>
+  <hr/><footer><button class="fl" onclick="go('home')">P2RADIX</button><div class="fc">Faculté de Pharmacie · Algérie</div><div class="fln"><button onclick="go('internship')">Stage</button><button onclick="go('master')">Master</button><button onclick="go('about')">À propos</button></div></footer>
+</div>
+
+<!-- INTERNSHIP -->
+
+<div class="page" id="page-internship">
+  <header class="ph"><div class="ph-bg"></div><div class="ph-glow"></div><div class="ey">Formation Pratique</div><h1 class="ph-t">Stage &<br><span class="acc">Internship</span></h1><p class="ph-s">Ressources, guides et documents pour vos stages industriels et hospitaliers en milieu pharmaceutique.</p></header>
+  <div class="ticker"><span class="ti">Production · Contrôle Qualité · BPF · Stage Industriel · Laboratoire · Officine · Hôpital · Rapport de Stage · Production · Contrôle Qualité · BPF · Stage Industriel · Laboratoire · Officine · Hôpital · Rapport de Stage ·&nbsp;</span></div>
+  <section class="sec">
+    <div class="sl">— Ressources de Stage</div>
+    <div class="ih rv">
+      <div class="ii">
+        <h2 class="it">Votre stage<br>commence ici.</h2>
+        <p class="ib2">Accédez à tous les documents nécessaires pour votre stage pharmaceutique : guides de terrain, rapports types, fiches d'évaluation, et ressources pratiques organisées par département.<br><br>Les stages constituent un pilier fondamental de la formation IPPS et AUX.</p>
+        <div class="br"><a href="https://sites.google.com/view/p2radix/internship/internship" target="_blank" rel="noopener" class="btn bg">↗ Accéder aux Ressources</a><button class="btn bgh" onclick="go('license')">Retour aux Cours</button></div>
+      </div>
+      <div class="iv">
+        <svg width="170" height="170" viewBox="0 0 180 180" fill="none" style="position:relative;z-index:1">
+          <circle cx="90" cy="90" r="11" fill="#6ee6a0" opacity=".9"/>
+          <circle cx="54" cy="54" r="7" fill="#6ee6a0" opacity=".55"/><circle cx="126" cy="54" r="7" fill="#6ee6a0" opacity=".55"/>
+          <circle cx="54" cy="126" r="7" fill="#6ee6a0" opacity=".55"/><circle cx="126" cy="126" r="7" fill="#6ee6a0" opacity=".55"/>
+          <circle cx="90" cy="26" r="5" fill="#e8c36a" opacity=".65"/><circle cx="154" cy="90" r="5" fill="#e8c36a" opacity=".65"/>
+          <circle cx="90" cy="154" r="5" fill="#e8c36a" opacity=".65"/><circle cx="26" cy="90" r="5" fill="#e8c36a" opacity=".65"/>
+          <line x1="90" y1="90" x2="54" y2="54" stroke="#6ee6a0" stroke-width="1.5" opacity=".35"/>
+          <line x1="90" y1="90" x2="126" y2="54" stroke="#6ee6a0" stroke-width="1.5" opacity=".35"/>
+          <line x1="90" y1="90" x2="54" y2="126" stroke="#6ee6a0" stroke-width="1.5" opacity=".35"/>
+          <line x1="90" y1="90" x2="126" y2="126" stroke="#6ee6a0" stroke-width="1.5" opacity=".35"/>
+          <line x1="90" y1="90" x2="90" y2="26" stroke="#e8c36a" stroke-width="1" opacity=".25"/>
+          <line x1="90" y1="90" x2="154" y2="90" stroke="#e8c36a" stroke-width="1" opacity=".25"/>
+          <line x1="90" y1="90" x2="90" y2="154" stroke="#e8c36a" stroke-width="1" opacity=".25"/>
+          <line x1="90" y1="90" x2="26" y2="90" stroke="#e8c36a" stroke-width="1" opacity=".25"/>
+          <circle cx="90" cy="90" r="38" stroke="#6ee6a0" stroke-width=".5" opacity=".15" stroke-dasharray="4 4"><animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="20s" repeatCount="indefinite"/></circle>
+          <circle cx="90" cy="90" r="64" stroke="#e8c36a" stroke-width=".5" opacity=".1" stroke-dasharray="3 6"><animateTransform attributeName="transform" type="rotate" from="360 90 90" to="0 90 90" dur="30s" repeatCount="indefinite"/></circle>
+        </svg>
+        <p style="margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--td);position:relative;z-index:1">Structure Moléculaire</p>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl">— Types de stages</div>
+    <div class="sgc rv">
+      <div class="sc"><div class="sn2">01</div><div class="st">Stage Production Pharmaceutique</div><p class="sd">Immersion en lignes de production industrielle, fabrication de formes pharmaceutiques, respect des BPF.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg bg2">L3 IPPS</span><span class="bdg">Industriel</span></div></div>
+      <div class="sc"><div class="sn2">02</div><div class="st">Stage Contrôle de Qualité</div><p class="sd">Tests physico-chimiques, microbiologiques et validation des méthodes analytiques en laboratoire.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg bg2">L3 IPPS</span><span class="bdg">Labo</span></div></div>
+      <div class="sc"><div class="sn2">03</div><div class="st">Stage Gestion de la Qualité</div><p class="sd">Systèmes QMS, audits internes, documentation qualité et suivi des non-conformités.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg bg2">L3 IPPS</span><span class="bdg">Qualité</span></div></div>
+      <div class="sc"><div class="sn2">04</div><div class="st">Stage Pharmacie Officinale</div><p class="sd">Dispensation, conseil au patient, gestion des stocks, préparations magistrales en officine.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg ba2">L3 AUX</span><span class="bdg">Officine</span></div></div>
+      <div class="sc"><div class="sn2">05</div><div class="st">Stage Laboratoire Biologie</div><p class="sd">Analyses biologiques médicales, biochimie, hématologie et assurance qualité en laboratoire.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg ba2">L3 AUX</span><span class="bdg">Labo</span></div></div>
+      <div class="sc"><div class="sn2">06</div><div class="st">Stage Internship Général</div><p class="sd">Stage d'observation et d'immersion professionnelle dans le secteur pharmaceutique ou hospitalier.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg">L2 · L3</span><span class="bdg">Tous parcours</span></div></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl">— Déroulement type</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px" class="rv">
+      <div class="tl">
+        <div class="tli"><div class="tld"></div><div class="tll">Semaine 1</div><div class="tlt">Accueil & Orientation</div><p class="tld2">Présentation de l'entreprise, des équipes, des procédures internes, remise des EPI.</p></div>
+        <div class="tli"><div class="tld"></div><div class="tll">Semaines 2–4</div><div class="tlt">Immersion Pratique</div><p class="tld2">Participation active aux activités du département, observation et tâches encadrées.</p></div>
+        <div class="tli"><div class="tld"></div><div class="tll">Semaines 5–7</div><div class="tlt">Mission Personnelle</div><p class="tld2">Réalisation d'une mission spécifique en autonomie guidée par le maître de stage.</p></div>
+        <div class="tli"><div class="tld"></div><div class="tll">Semaine 8</div><div class="tlt">Rapport & Soutenance</div><p class="tld2">Rédaction du rapport, bilan avec le tuteur et présentation devant jury.</p></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px"><span class="ci">📄</span><div class="ct2">Documents obligatoires</div><p class="cb">Convention de stage, fiche d'évaluation, rapport écrit, présentation orale — disponibles sur la plateforme originale.</p></div>
+        <div class="card"><span class="ci">✅</span><div class="ct2">Critères d'évaluation</div><p class="cb">Ponctualité, implication, qualité du rapport, soutenance, et appréciation du maître de stage.</p></div>
+      </div>
+    </div>
+  </section>
+  <hr/><footer><button class="fl" onclick="go('home')">P2RADIX</button><div class="fc">Faculté de Pharmacie · Algérie</div><div class="fln"><button onclick="go('license')">Licence</button><button onclick="go('master')">Master</button><button onclick="go('about')">À propos</button></div></footer>
+</div>
+
+<!-- MASTER -->
+
+<div class="page" id="page-master">
+  <header class="ph" style="border-bottom:1px solid rgba(232,195,106,.15)"><div class="ph-bg" style="background-image:linear-gradient(rgba(232,195,106,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(232,195,106,.02) 1px,transparent 1px);background-size:48px 48px"></div><div class="ph-glow" style="background:radial-gradient(circle,rgba(232,195,106,.08) 0%,transparent 70%)"></div><div class="ey" style="color:var(--a)">Post-Licence · 2 ans</div><h1 class="ph-t">Master en<br><span class="amb">Sciences Pharm.</span></h1><p class="ph-s">Formation avancée en sciences pharmaceutiques pour diplômés de Licence IPPS — recherche, innovation et management.</p></header>
+  <div class="ticker ta"><span class="ti">Master Sciences Pharmaceutiques · Recherche & Développement · Biotechnologie Avancée · Management Pharmaceutique · Réglementation · Innovation · Master Sciences Pharmaceutiques · Recherche & Développement · Biotechnologie Avancée · Management Pharmaceutique · Réglementation · Innovation ·&nbsp;</span></div>
+  <section class="sec">
+    <div class="sl am">— Programme Master</div>
+    <div class="mh rv">
+      <div class="mt2">Bientôt en ligne</div>
+      <h2 class="mtt">Formation<br>d'Excellence</h2>
+      <p class="mts">Le Master en Sciences Pharmaceutiques représente l'aboutissement de la formation académique. Il prépare aux métiers de la recherche, du développement et du management pharmaceutique. Les ressources sont en cours d'intégration sur P2RADIX.</p>
+      <div class="br"><a href="https://sites.google.com/view/p2radix/master" target="_blank" rel="noopener" class="btn ba">↗ Voir sur le Site Original</a><button class="btn bgh" onclick="go('license')">← Retour Licence</button></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl am">— Modules prévisionnels</div>
+    <div class="csg rv">
+      <div class="cs"><div class="cst"><span class="csi">🔬</span><span class="csb">M1 · S1</span></div><div class="cstit">Biotechnologie Avancée</div><p class="csd">Génie génétique, cultures cellulaires, bioréacteurs et production de biomolécules thérapeutiques.</p></div>
+      <div class="cs"><div class="cst"><span class="csi">📊</span><span class="csb">M1 · S1</span></div><div class="cstit">Recherche & Développement</div><p class="csd">Méthodologie de recherche, études précliniques, design expérimental et analyse statistique avancée.</p></div>
+      <div class="cs"><div class="cst"><span class="csi">⚖️</span><span class="csb">M1 · S2</span></div><div class="cstit">Réglementation Pharmaceutique</div><p class="csd">AMM, dossiers réglementaires, directives européennes, pharmacovigilance et affaires réglementaires.</p></div>
+      <div class="cs"><div class="cst"><span class="csi">🏭</span><span class="csb">M1 · S2</span></div><div class="cstit">Management Industriel</div><p class="csd">Lean manufacturing, management de projets pharmaceutiques, supply chain et stratégie d'entreprise.</p></div>
+      <div class="cs"><div class="cst"><span class="csi">🧬</span><span class="csb">M2 · S1</span></div><div class="cstit">Pharmacologie Moléculaire</div><p class="csd">Cibles thérapeutiques, mécanismes d'action, drug design et études ADMET avancées.</p></div>
+      <div class="cs"><div class="cst"><span class="csi">📝</span><span class="csb">M2 · S2</span></div><div class="cstit">Mémoire de Recherche</div><p class="csd">Travail de recherche original, rédaction scientifique, publication et soutenance devant jury académique.</p></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl am">— Informations pratiques</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="rv">
+      <div class="ib"><div class="ibt">Conditions d'accès</div><ul class="ibl"><li>Licence IPPS obtenue avec mention</li><li>Dossier de candidature complet</li><li>Entretien de sélection</li><li>Test de niveau (si requis)</li><li>Places limitées par promotion</li></ul></div>
+      <div class="ib"><div class="ibt">Débouchés professionnels</div><ul class="ibl"><li>Chercheur en R&D pharmaceutique</li><li>Responsable Contrôle Qualité</li><li>Affaires réglementaires (RA)</li><li>Directeur de production</li><li>Consultant pharmaceutique</li><li>Doctorat en sciences pharmaceutiques</li></ul></div>
+    </div>
+  </section>
+  <hr/><footer><button class="fl" onclick="go('home')">P2RADIX</button><div class="fc">Faculté de Pharmacie · Algérie</div><div class="fln"><button onclick="go('license')">Licence</button><button onclick="go('internship')">Stage</button><button onclick="go('about')">À propos</button></div></footer>
+</div>
+
+<!-- ABOUT -->
+
+<div class="page" id="page-about">
+  <header class="ph"><div class="ph-bg"></div><div class="ph-glow"></div><div class="ey">Le Projet</div><h1 class="ph-t">À<br><span class="acc">Propos</span></h1><p class="ph-s">La mission, les valeurs et l'histoire derrière la plateforme P2RADIX.</p></header>
+  <div class="ticker"><span class="ti">Pharmacie · Industrie · Science · Savoir · Méthode · Algérie · Faculté · Étudiants · IPPS · AUX · Pharmacie · Industrie · Science · Savoir · Méthode · Algérie · Faculté · Étudiants · IPPS · AUX ·&nbsp;</span></div>
+  <section class="sec">
+    <div class="sl">— Notre mission</div>
+    <div class="mf rv">
+      <div class="mfl"><div class="mfb">La connaissance,<br>sans<br><span class="g">friction.</span></div></div>
+      <div class="mfr"><div class="mfd"><p><strong>P2RADIX</strong> est né d'un constat simple : les ressources académiques pharmaceutiques étaient éparpillées, difficiles d'accès, et mal organisées pour les étudiants de la Faculté de Pharmacie.</p><p>La plateforme centralise l'ensemble des contenus pédagogiques pour les filières <strong>IPPS</strong> et <strong>AUX</strong>, du niveau L1 jusqu'au Master. Chaque module est structuré autour de quatre ressources clés : <strong>Cours</strong>, <strong>TD</strong>, <strong>Examens</strong> et <strong>Extra</strong>.</p><p>L'objectif est de permettre à chaque étudiant de retrouver instantanément ce dont il a besoin, de préparer ses examens efficacement, et de naviguer dans son parcours académique avec clarté et confiance.</p><p>Ce projet est un effort collectif, porté par des étudiants pour des étudiants, avec le soutien du corps enseignant. Il évolue en continu au fil des années et des nouvelles promotions.</p></div></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl">— Nos valeurs</div>
+    <div class="vg rv">
+      <div class="vc"><div class="vn">01</div><div class="vt">Accessibilité</div><p class="vd">Toutes les ressources sont librement accessibles, sans inscription, sans barrière. Le savoir appartient à tous.</p></div>
+      <div class="vc"><div class="vn">02</div><div class="vt">Clarté</div><p class="vd">Une organisation rigoureuse par année, filière et type de ressource pour trouver ce qu'on cherche en secondes.</p></div>
+      <div class="vc"><div class="vn">03</div><div class="vt">Continuité</div><p class="vd">La plateforme est mise à jour régulièrement pour refléter les évolutions du programme et intégrer les nouvelles ressources.</p></div>
+      <div class="vc"><div class="vn">04</div><div class="vt">Qualité</div><p class="vd">Seules les ressources validées et pertinentes sont intégrées, en accord avec les contenus enseignés à la Faculté.</p></div>
+      <div class="vc"><div class="vn">05</div><div class="vt">Communauté</div><p class="vd">Un projet étudiant, construit collectivement, qui grandit grâce aux contributions de toute la communauté P2RADIX.</p></div>
+      <div class="vc"><div class="vn">06</div><div class="vt">Excellence</div><p class="vd">Former les futurs professionnels de la santé pharmaceutique algériens au plus haut niveau d'exigence académique.</p></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl">— Questions fréquentes</div>
+    <div class="fl2 rv">
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Qui peut utiliser P2RADIX ?</span><span class="fa2">›</span></button><div class="fan">La plateforme est ouverte à tous les étudiants en pharmacie de la Faculté de Pharmacie de l'Université des Sciences de la Santé, filières IPPS et AUX, du L1 au Master.</div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Les ressources sont-elles gratuites ?</span><span class="fa2">›</span></button><div class="fan">Oui, absolument. Toutes les ressources disponibles sur P2RADIX sont entièrement gratuites et accessibles sans inscription ni connexion requise.</div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>À quelle fréquence les cours sont-ils mis à jour ?</span><span class="fa2">›</span></button><div class="fan">Les ressources sont mises à jour régulièrement par les contributeurs, généralement au début de chaque semestre et après les sessions d'examens.</div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Comment contribuer au projet ?</span><span class="fa2">›</span></button><div class="fan">Vous pouvez contribuer en soumettant des ressources via la plateforme originale sur Google Sites, ou en contactant les administrateurs. Les contributions sont les bienvenues après validation.</div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Ce site est-il le site officiel ?</span><span class="fa2">›</span></button><div class="fan">Ce site est une version redessinée de la plateforme P2RADIX originale hébergée sur Google Sites. Il pointe vers les ressources originales. Pour la version officielle, visitez sites.google.com/view/p2radix.</div></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="sl">— Liens rapides</div>
+    <div class="g3 rv">
+      <div class="card" onclick="go('license')" style="cursor:pointer"><span class="ci">🧪</span><div class="ct2">Explorer la Licence</div><p class="cb">Tous les modules L1, L2 et L3 pour les filières IPPS et AUX avec leurs ressources.</p></div>
+      <div class="card" onclick="go('internship')" style="cursor:pointer"><span class="ci">🏭</span><div class="ct2">Préparer le Stage</div><p class="cb">Guides et ressources pour vos stages industriels, hospitaliers et officinaux.</p></div>
+      <div class="card" onclick="go('master')" style="cursor:pointer"><span class="ci">🎓</span><div class="ct2">Découvrir le Master</div><p class="cb">Formation avancée post-Licence en sciences pharmaceutiques et recherche.</p></div>
+    </div>
+  </section>
+  <hr/><footer><button class="fl" onclick="go('home')">P2RADIX</button><div class="fc">Université des Sciences de la Santé « Dr. Youssef Al-Khatib »<br>Faculté de Pharmacie · Algérie</div><div class="fln"><button onclick="go('license')">Licence</button><button onclick="go('internship')">Stage</button><button onclick="go('master')">Master</button></div></footer>
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-3.5}px,${my-3.5}px)`});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.transform=`translate(${rx-15}px,${ry-15}px)`;requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.card,.cr,.cs,.sc,.vc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='44px';ring.style.height='44px'});
+  el.addEventListener('mouseleave',()=>{ring.style.width='30px';ring.style.height='30px'});
+});
+/* ROUTING */
+function go(page,tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('n-'+page);if(nb)nb.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  initReveal();
+  if(page==='license'&&tab){setTimeout(()=>{const b=document.querySelector(`#ltabs [data-tab="${tab}"]`);if(b)b.click();},50);}
+  if(page==='license')setTimeout(upd,100);
+}
+/* MOBILE MENU */
+function tmm(){const m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
+function cmm(){document.getElementById('mm').style.display='none';}
+/* TABS */
+document.querySelectorAll('#ltabs .tab').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('#ltabs .tab').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    const t=this.dataset.tab;
+    document.querySelectorAll('#page-license .tp').forEach(p=>p.classList.remove('active'));
+    const panel=document.querySelector(`#page-license [data-panel="${t}"]`);
+    if(panel){panel.classList.add('active');initReveal();}
+    const s=document.getElementById('msrch');if(s){s.value='';document.querySelectorAll('.cr').forEach(r=>r.style.display='');}
+    setTimeout(upd,50);
+  });
+});
+/* COURSE DATA */
+const B='https://sites.google.com/view/p2radix';
+const D={
+  l1:[
+    {n:'Chimie Générale (I)',c:`${B}/license/l1-ippsaux/courses/general-chemistry/courses`,t:`${B}/license/l1-ippsaux/courses/general-chemistry/td`,e:`${B}/license/l1-ippsaux/courses/general-chemistry/exames`,x:`${B}/license/l1-ippsaux/courses/general-chemistry/extra`},
+    {n:'Chimie Organique',c:`${B}/license/l1-ippsaux/courses/chimie-organique/courses-or`,t:`${B}/license/l1-ippsaux/courses/chimie-organique/td-or`,e:`${B}/license/l1-ippsaux/courses/chimie-organique/exames`,x:`${B}/license/l1-ippsaux/courses/chimie-organique/extra`},
+    {n:'Physique',c:`${B}/license/l1-ippsaux/courses/physique/courses-phy`,t:`${B}/license/l1-ippsaux/courses/physique/td-phy`,e:`${B}/license/l1-ippsaux/courses/physique/exames`,x:`${B}/license/l1-ippsaux/courses/physique/extra`},
+    {n:'Biologie Végétale',c:`${B}/license/l1-ippsaux/courses/biologie-vegetale/courses-bv`,t:`${B}/license/l1-ippsaux/courses/biologie-vegetale/td-bv`,e:`${B}/license/l1-ippsaux/courses/biologie-vegetale/exames`,x:`${B}/license/l1-ippsaux/courses/biologie-vegetale/extra`},
+    {n:'Biologie Animale',c:`${B}/license/l1-ippsaux/courses/biologie-animale/courses-ba`,t:`${B}/license/l1-ippsaux/courses/biologie-animale/td-ba`,e:`${B}/license/l1-ippsaux/courses/biologie-animale/exames`,x:`${B}/license/l1-ippsaux/courses/biologie-animale/extra`},
+    {n:'Biostatistiques',c:`${B}/license/l1-ippsaux/courses/biostatistiques/courses-bis`,t:`${B}/license/l1-ippsaux/courses/biostatistiques/td-bis`,e:`${B}/license/l1-ippsaux/courses/biostatistiques/exames`,x:`${B}/license/l1-ippsaux/courses/biostatistiques/extra`},
+    {n:'Logiciels & Outils Informatiques',c:`${B}/license/l1-ippsaux/courses/logiciels-et-outils-informatiques/courses-inf`,t:`${B}/license/l1-ippsaux/courses/logiciels-et-outils-informatiques/td-inf`,e:`${B}/license/l1-ippsaux/courses/logiciels-et-outils-informatiques/exames`,x:`${B}/license/l1-ippsaux/courses/logiciels-et-outils-informatiques/extra`},
+    {n:'Terminologie Médico-Pharmaceutique',c:`${B}/license/l1-ippsaux/courses/terminologie-medico-pharmaceutique/courses-tr`,t:`${B}/license/l1-ippsaux/courses/terminologie-medico-pharmaceutique/td-tr`,e:`${B}/license/l1-ippsaux/courses/terminologie-medico-pharmaceutique/exames`,x:`${B}/license/l1-ippsaux/courses/terminologie-medico-pharmaceutique/extra`},
+    {n:'Anglais Niveau 1',c:`${B}/license/l1-ippsaux/courses/anglais-niveau-1/courses-an1`,t:`${B}/license/l1-ippsaux/courses/anglais-niveau-1/td`,e:`${B}/license/l1-ippsaux/courses/anglais-niveau-1/exames`,x:`${B}/license/l1-ippsaux/courses/anglais-niveau-1/extra`},
+    {n:'Chimie Générale (II)',c:`${B}/license/l1-ippsaux/courses/chimie-generale-ii/courses-cg2`,t:`${B}/license/l1-ippsaux/courses/chimie-generale-ii/td-cg2`,e:`${B}/license/l1-ippsaux/courses/chimie-generale-ii/exames`,x:`${B}/license/l1-ippsaux/courses/chimie-generale-ii/extra`},
+    {n:'Chimie Inorganique',c:`${B}/license/l1-ippsaux/courses/chimie-inorganique/courses-ci`,t:`${B}/license/l1-ippsaux/courses/chimie-inorganique/td-ci`,e:`${B}/license/l1-ippsaux/courses/chimie-inorganique/exames`,x:`${B}/license/l1-ippsaux/courses/chimie-inorganique/extra`},
+    {n:'Anatomie — Physiopathologie',c:`${B}/license/l1-ippsaux/courses/anatomie-physiopathologie/courses-app`,t:`${B}/license/l1-ippsaux/courses/anatomie-physiopathologie/td-app`,e:`${B}/license/l1-ippsaux/courses/anatomie-physiopathologie/exames`,x:`${B}/license/l1-ippsaux/courses/anatomie-physiopathologie/extra`},
+    {n:'Taxonomie & Systématique Végétale',c:`${B}/license/l1-ippsaux/courses/taxonomie-et-systematique-vegetale/courses-tx`,t:`${B}/license/l1-ippsaux/courses/taxonomie-et-systematique-vegetale/td-tx`,e:`${B}/license/l1-ippsaux/courses/taxonomie-et-systematique-vegetale/exames`,x:`${B}/license/l1-ippsaux/courses/taxonomie-et-systematique-vegetale/extra`},
+    {n:'Méthodes Chimiques',c:`${B}/license/l1-ippsaux/courses/methodes-chimiques/courses-mc`,t:`${B}/license/l1-ippsaux/courses/methodes-chimiques/td-mc`,e:`${B}/license/l1-ippsaux/courses/methodes-chimiques/exames`,x:`${B}/license/l1-ippsaux/courses/methodes-chimiques/extra-mc`},
+    {n:'Méthodes Physiques',c:`${B}/license/l1-ippsaux/courses/methodes-physiques/courses-mp`,t:`${B}/license/l1-ippsaux/courses/methodes-physiques/td-mp`,e:`${B}/license/l1-ippsaux/courses/methodes-physiques/exames`,x:`${B}/license/l1-ippsaux/courses/methodes-physiques/extra`},
+    {n:'Histoire des Sciences Méd. & Pharm.',c:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/courses-hs`,t:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/td-hs`,e:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/exames`,x:`${B}/license/l1-ippsaux/courses/histoire-des-sciences-medicales-et-pharmaceutiques/extra`},
+  ],
+  l2ipps:[
+    {n:'Substances Bioactives à Intérêt Thérapeutique',c:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/courses-sb`,t:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/td-sb`,e:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/exames`,x:`${B}/license/l2-ipps/courses/substances-bioactives-a-interet-therapeutique/extra`},
+    {n:'Pharmacologie (1)',c:`${B}/license/l2-ipps/courses/phamacologie-1/courses-phg`,t:`${B}/license/l2-ipps/courses/phamacologie-1/td-phg`,e:`${B}/license/l2-ipps/courses/phamacologie-1/exames`,x:`${B}/license/l2-ipps/courses/phamacologie-1/extra`},
+    {n:'Sciences Biologiques (1)',c:`${B}/license/l2-ipps/courses/sciences-biologiques-1/courses-sb1`,t:`${B}/license/l2-ipps/courses/sciences-biologiques-1/td-sb1`,e:`${B}/license/l2-ipps/courses/sciences-biologiques-1/exames`,x:`${B}/license/l2-ipps/courses/sciences-biologiques-1/extra`},
+    {n:'Compléments Alimentaires',c:`${B}/license/l2-ipps/courses/complements-alimentaires/courses-ca`,t:`${B}/license/l2-ipps/courses/complements-alimentaires/td-ca`,e:`${B}/license/l2-ipps/courses/complements-alimentaires/exames`,x:`${B}/license/l2-ipps/courses/complements-alimentaires/extra`},
+    {n:'Méthodes Séparatives',c:`${B}/license/l2-ipps/courses/methodes-separatives/courses-mse`,t:`${B}/license/l2-ipps/courses/methodes-separatives/td-mse`,e:`${B}/license/l2-ipps/courses/methodes-separatives/exames`,x:`${B}/license/l2-ipps/courses/methodes-separatives/extra`},
+    {n:'Méthodes Spectrales',c:`${B}/license/l2-ipps/courses/methodes-spectrale/courses-msp`,t:`${B}/license/l2-ipps/courses/methodes-spectrale/td-msp`,e:`${B}/license/l2-ipps/courses/methodes-spectrale/exames`,x:`${B}/license/l2-ipps/courses/methodes-spectrale/extra`},
+    {n:'Opérations Pharmaceutiques',c:`${B}/license/l2-ipps/courses/operations-pharmaceutiques/courses-op`,t:`${B}/license/l2-ipps/courses/operations-pharmaceutiques/td-op`,e:`${B}/license/l2-ipps/courses/operations-pharmaceutiques/exames`,x:`${B}/license/l2-ipps/courses/operations-pharmaceutiques/extra`},
+    {n:'Bonnes Pratiques (BPF · BPL · BPC)',c:`${B}/license/l2-ipps/courses/bonnes-pratiques-bpf-bpl-bpc/courses-bpx`,t:`${B}/license/l2-ipps/courses/bonnes-pratiques-bpf-bpl-bpc/td-bpx`,e:`${B}/license/l2-ipps/courses/bonnes-pratiques-bpf-bpl-bpc/exames`,x:`${B}/license/l2-ipps/courses/bonnes-pratiques-bpf-bpl-bpc/extra`},
+    {n:'Anglais Technique Niveau 2',c:`${B}/license/l2-ipps/courses/anglais-technique-et-professionnel-niveau-2/courses-an2`,t:`${B}/license/l2-ipps/courses/anglais-technique-et-professionnel-niveau-2/td`,e:`${B}/license/l2-ipps/courses/anglais-technique-et-professionnel-niveau-2/exames`,x:`${B}/license/l2-ipps/courses/anglais-technique-et-professionnel-niveau-2/extra`},
+    {n:'Phytothérapie & Aromathérapie',c:`${B}/license/l2-ipps/courses/phytotherapie-et-aromatherapie/courses-phe`,t:`${B}/license/l2-ipps/courses/phytotherapie-et-aromatherapie/td-phe`,e:`${B}/license/l2-ipps/courses/phytotherapie-et-aromatherapie/exames`,x:`${B}/license/l2-ipps/courses/phytotherapie-et-aromatherapie/extra`},
+    {n:'Pharmacologie Spéciale',c:`${B}/license/l2-ipps/courses/phamacologie-speciale/courses-ps2`,t:`${B}/license/l2-ipps/courses/phamacologie-speciale/td-ps2`,e:`${B}/license/l2-ipps/courses/phamacologie-speciale/exames`,x:`${B}/license/l2-ipps/courses/phamacologie-speciale/extra`},
+    {n:'Sciences Biologiques (2)',c:`${B}/license/l2-ipps/courses/sciences-biologiques-2/courses-sb2`,t:`${B}/license/l2-ipps/courses/sciences-biologiques-2/td-sb2`,e:`${B}/license/l2-ipps/courses/sciences-biologiques-2/exames`,x:`${B}/license/l2-ipps/courses/sciences-biologiques-2/extra`},
+    {n:'Dermo-Cosmétologie',c:`${B}/license/l2-ipps/courses/dermo-cosmetologie/courses-dc`,t:`${B}/license/l2-ipps/courses/dermo-cosmetologie/td-dc`,e:`${B}/license/l2-ipps/courses/dermo-cosmetologie/exames`,x:`${B}/license/l2-ipps/courses/dermo-cosmetologie/extra`},
+    {n:'Analyses Biologiques',c:`${B}/license/l2-ipps/courses/analyses-biologiques/courses-ab`,t:`${B}/license/l2-ipps/courses/analyses-biologiques/td-ab`,e:`${B}/license/l2-ipps/courses/analyses-biologiques/exames`,x:`${B}/license/l2-ipps/courses/analyses-biologiques/extra`},
+    {n:'Formes Pharmaceutiques',c:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/courses-fp`,t:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/td-fp`,e:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/exames`,x:`${B}/license/l2-ipps/courses/formes-pharmaceutiques/extra`},
+    {n:'Normes & Guidelines',c:`${B}/license/l2-ipps/courses/normes-et-guidelines/courses-ng`,t:`${B}/license/l2-ipps/courses/normes-et-guidelines/td-ng`,e:`${B}/license/l2-ipps/courses/normes-et-guidelines/exames`,x:`${B}/license/l2-ipps/courses/normes-et-guidelines/extra`},
+  ],
+  l2aux:[
+    {n:'Substances Bioactives à Intérêt Thérapeutique',c:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-courses`,t:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-cc`,e:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-exams`,x:`${B}/license/l2-aux/courses-l/substances-bioactives-a-interet-therapeutique/sbn%C3%A0it-extra`},
+    {n:'Sciences Biologiques (1)',c:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/courses`,t:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/td`,e:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/exames`,x:`${B}/license/l2-aux/courses-l/sciences-biologiques-1/extra`},
+    {n:'Méthodes Séparatives',c:`${B}/license/l2-aux/courses-l/methodes-separatives/courses`,t:`${B}/license/l2-aux/courses-l/methodes-separatives/td`,e:`${B}/license/l2-aux/courses-l/methodes-separatives/exames`,x:`${B}/license/l2-aux/courses-l/methodes-separatives/extra`},
+    {n:'Méthodes Spectrales',c:`${B}/license/l2-aux/courses-l/methodes-spectrale/courses`,t:`${B}/license/l2-aux/courses-l/methodes-spectrale/td`,e:`${B}/license/l2-aux/courses-l/methodes-spectrale/exames`,x:`${B}/license/l2-aux/courses-l/methodes-spectrale/extra`},
+    {n:'Opérations Pharmaceutiques',c:`${B}/license/l2-aux/courses-l/operations-pharmaceutiques/courses`,t:`${B}/license/l2-aux/courses-l/operations-pharmaceutiques/td`,e:`${B}/license/l2-aux/courses-l/operations-pharmaceutiques/exames`,x:`${B}/license/l2-aux/courses-l/operations-pharmaceutiques/extra`},
+    {n:'Bonnes Pratiques (BPF · BPL · BPC)',c:`${B}/license/l2-aux/courses-l/bonnes-pratiques-bpf-bpl-bpc/courses`,t:`${B}/license/l2-aux/courses-l/bonnes-pratiques-bpf-bpl-bpc/td`,e:`${B}/license/l2-aux/courses-l/bonnes-pratiques-bpf-bpl-bpc/exames`,x:`${B}/license/l2-aux/courses-l/bonnes-pratiques-bpf-bpl-bpc/extra`},
+    {n:'Phytothérapie & Aromathérapie',c:`${B}/license/l2-aux/courses-l/phytotherapie-et-aromatherapie/courses`,t:`${B}/license/l2-aux/courses-l/phytotherapie-et-aromatherapie/td`,e:`${B}/license/l2-aux/courses-l/phytotherapie-et-aromatherapie/exames`,x:`${B}/license/l2-aux/courses-l/phytotherapie-et-aromatherapie/extra`},
+    {n:'Pharmacologie Spéciale',c:`${B}/license/l2-aux/courses-l/phamacologie-speciale/courses`,t:`${B}/license/l2-aux/courses-l/phamacologie-speciale/td`,e:`${B}/license/l2-aux/courses-l/phamacologie-speciale/exames`,x:`${B}/license/l2-aux/courses-l/phamacologie-speciale/extra`},
+    {n:'Sciences Biologiques (2)',c:`${B}/license/l2-aux/courses-l/sciences-biologiques-2/courses`,t:`${B}/license/l2-aux/courses-l/sciences-biologiques-2/td`,e:`${B}/license/l2-aux/courses-l/sciences-biologiques-2/exames`,x:`${B}/license/l2-aux/courses-l/sciences-biologiques-2/extra`},
+    {n:'Analyses Biologiques',c:`${B}/license/l2-aux/courses-l/analyses-biologiques/courses`,t:`${B}/license/l2-aux/courses-l/analyses-biologiques/td`,e:`${B}/license/l2-aux/courses-l/analyses-biologiques/exames`,x:`${B}/license/l2-aux/courses-l/analyses-biologiques/extra`},
+    {n:'Formes Pharmaceutiques',c:`${B}/license/l2-aux/courses-l/formes-pharmaceutiques/courses`,t:`${B}/license/l2-aux/courses-l/formes-pharmaceutiques/td`,e:`${B}/license/l2-aux/courses-l/formes-pharmaceutiques/exames`,x:`${B}/license/l2-aux/courses-l/formes-pharmaceutiques/extra`},
+    {n:'Stérilisation & Désinfection',c:`${B}/license/l2-aux/courses-l/sterilisation-et-desinfection/courses-str`,t:`${B}/license/l2-aux/courses-l/sterilisation-et-desinfection/td-str`,e:`${B}/license/l2-aux/courses-l/sterilisation-et-desinfection/exames`,x:`${B}/license/l2-aux/courses-l/sterilisation-et-desinfection/extra`},
+    {n:'Normes & Guidelines',c:`${B}/license/l2-aux/courses-l/normes-et-guidelines/courses`,t:`${B}/license/l2-aux/courses-l/normes-et-guidelines/td`,e:`${B}/license/l2-aux/courses-l/normes-et-guidelines/exames`,x:`${B}/license/l2-aux/courses-l/normes-et-guidelines/extra`},
+    {n:'Anglais Technique Niveau 2',c:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/courses`,t:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/td`,e:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/exames`,x:`${B}/license/l2-aux/courses-l/anglais-technique-et-professionnel-niveau-2/extra`},
+    {n:'Logiciels de Gestion',c:`${B}/license/l2-aux/courses-l/logiciels-de-gestion`,t:null,e:null,x:null},
+  ],
+  l3ipps:[
+    {n:'Biotechnologie',c:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/biotechnologie/extra`},
+    {n:'Production Pharmaceutique',c:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/production-pharmaceutique/extra`},
+    {n:'Contrôle de Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/contr%C3%B4le-de-qualite/extra`},
+    {n:'Économie de la Santé',c:`${B}/license/l3-ipps/courses-l3-ipps/economie-de-la-sante/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/economie-de-la-sante/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/economie-de-la-sante/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/economie-de-la-sante/extra`},
+    {n:'Métrologie · Qualification · Validation',c:`${B}/license/l3-ipps/courses-l3-ipps/metrologie-qualification-validation/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/metrologie-qualification-validation/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/metrologie-qualification-validation/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/metrologie-qualification-validation/extra`},
+    {n:'Management de la Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/management-de-la-qualite/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/management-de-la-qualite/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/management-de-la-qualite/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/management-de-la-qualite/extra`},
+    {n:'HSE — Gestion des Risques',c:`${B}/license/l3-ipps/courses-l3-ipps/hse-gestion-des-risques/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/hse-gestion-des-risques/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/hse-gestion-des-risques/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/hse-gestion-des-risques/extra`},
+    {n:'Législation & Code du Travail',c:`${B}/license/l3-ipps/courses-l3-ipps/legislation-et-code-du-travail/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/legislation-et-code-du-travail/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/legislation-et-code-du-travail/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/legislation-et-code-du-travail/extra`},
+    {n:"Gestes Sanitaires d'Urgence",c:`${B}/license/l3-ipps/courses-l3-ipps/gestes-sanitaires-durgence-et-de-secours/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/gestes-sanitaires-durgence-et-de-secours/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/gestes-sanitaires-durgence-et-de-secours/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/gestes-sanitaires-durgence-et-de-secours/extra`},
+    {n:'Langue Étrangère au Choix',c:`${B}/license/l3-ipps/courses-l3-ipps/langue-etrangere-au-choix/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/langue-etrangere-au-choix/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/langue-etrangere-au-choix/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/langue-etrangere-au-choix/extra`},
+    {n:'Insertion Professionnelle',c:`${B}/license/l3-ipps/courses-l3-ipps/insertion-professionnelle/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/insertion-professionnelle/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/insertion-professionnelle/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/insertion-professionnelle/extra`},
+    {n:'Techniques de Rédaction & Recherche Biblio.',c:`${B}/license/l3-ipps/courses-l3-ipps/techniques-de-redaction-et-de-recherche-bibliographique/courses`,t:`${B}/license/l3-ipps/courses-l3-ipps/techniques-de-redaction-et-de-recherche-bibliographique/td`,e:`${B}/license/l3-ipps/courses-l3-ipps/techniques-de-redaction-et-de-recherche-bibliographique/exames`,x:`${B}/license/l3-ipps/courses-l3-ipps/techniques-de-redaction-et-de-recherche-bibliographique/extra`},
+    {n:'Stage — Lab. Contrôle Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/stage-laboratoire-de-contr%C3%B4le-qualite`,t:null,e:null,x:null},
+    {n:'Stage — Production Pharmaceutique',c:`${B}/license/l3-ipps/courses-l3-ipps/stage-production-pharmaceutique`,t:null,e:null,x:null},
+    {n:'Stage — Gestion de la Qualité',c:`${B}/license/l3-ipps/courses-l3-ipps/stage-gestion-de-la-qualite`,t:null,e:null,x:null},
+  ],
+  l3aux:[
+    {n:'Gestion Pharmaceutique & Comptabilité',c:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/courses`,t:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/td`,e:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/exames`,x:`${B}/license/l3-aux/courses-l3-aux/gestion-pharmaceutique-et-comptabilite/extra`},
+    {n:'Produits de Santé',c:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/courses`,t:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/td`,e:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/exames`,x:`${B}/license/l3-aux/courses-l3-aux/produits-de-sante/extra`},
+    {n:'Bonnes Pratiques Officinales & Hospitalières',c:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/courses`,t:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/td`,e:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/exames`,x:`${B}/license/l3-aux/courses-l3-aux/bonnes-pratiques-de-preparations-officinales-et-hospitalieres/extra`},
+    {n:'Assurance Qualité — Lab. Biologie Médicale',c:`${B}/license/l3-aux/courses-l3-aux/assurance-qualite-dans-un-laboratoire-de-biologie-medicale/courses`,t:`${B}/license/l3-aux/courses-l3-aux/assurance-qualite-dans-un-laboratoire-de-biologie-medicale/td`,e:`${B}/license/l3-aux/courses-l3-aux/assurance-qualite-dans-un-laboratoire-de-biologie-medicale/exames`,x:`${B}/license/l3-aux/courses-l3-aux/assurance-qualite-dans-un-laboratoire-de-biologie-medicale/extra`},
+    {n:"Bonne Exécution des Ordonnances & Analyses",c:`${B}/license/l3-aux/courses-l3-aux/bonne-execution-des-ordonances-et-des-analyses-medicales`,t:null,e:null,x:null},
+    {n:'Stage — Pharmacie',c:`${B}/license/l3-aux/courses-l3-aux/stage-pharmacie`,t:null,e:null,x:null},
+    {n:'Stage — Laboratoire',c:`${B}/license/l3-aux/courses-l3-aux/stage-laboratoire`,t:null,e:null,x:null},
+  ],
+};
+function mkrow(r){
+  const lnk=(u,l)=>u?`<a class="rb" href="${u}" target="_blank" rel="noopener">↗ ${l}</a>`:`<span style="opacity:.25;font-size:9px;color:var(--td);display:block;text-align:center">—</span>`;
+  const d=document.createElement('div');d.className='cr';
+  d.innerHTML=`<div class="cn"><div class="cd"></div><span>${r.n}</span></div><div>${lnk(r.c,'Cours')}</div><div>${lnk(r.t,'TD')}</div><div>${lnk(r.e,'Exam')}</div><div>${lnk(r.x,'Extra')}</div>`;
+  return d;
+}
+['l1','l2ipps','l2aux','l3ipps','l3aux'].forEach(k=>{
+  const c=document.getElementById('r-'+k);
+  D[k].forEach(r=>c.appendChild(mkrow(r)));
+});
+function upd(){
+  const ap=document.querySelector('#page-license .tp.active');
+  if(!ap)return;
+  const rows=[...ap.querySelectorAll('.cr')];
+  const vis=rows.filter(r=>r.style.display!=='none').length;
+  document.getElementById('mcnt').textContent=`${vis} / ${rows.length} modules`;
+}
+upd();
+document.getElementById('msrch').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  const ap=document.querySelector('#page-license .tp.active');
+  if(!ap)return;
+  ap.querySelectorAll('.cr').forEach(r=>{
+    const s=r.querySelector('.cn span');
+    r.style.display=(!s||s.textContent.toLowerCase().includes(q))?'':'none';
+  });
+  upd();
+});
+/* FAQ */
+function faq(btn){
+  const a=btn.nextElementSibling,open=btn.classList.contains('open');
+  document.querySelectorAll('.fq.open').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open')});
+  if(!open){btn.classList.add('open');a.classList.add('open');}
+}
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+},{threshold:0.07});
+function initReveal(){document.querySelectorAll('.page.active .rv:not(.vis)').forEach(el=>obs.observe(el));}
+initReveal();
+go('home');
+</script>
+
 </body>
 </html>
